@@ -2,32 +2,34 @@
 import { useEffect, useState } from "react";
 import styles from "../../Styles/Home.module.css";
 import Image from "next/image";
+import { Input } from "antd";
 interface Card {
-    cardCode: string;
-    cardLogo: string;
-    periods: {
-      duration: number;
-      monthly_installment: number;
-      order_diffrence_amount: number;
-      order_loan_amount: number;
-      order_prepay_amount: number;
-      order_total_amount: number;
-      real_interest_rate: number;
-      processing_fee: number;
-      processing_fee_per_month: number;
-    }[];
-  }
-  
-  interface Bank {
-    bankName: string;
-    bankCode: string;
-    bankLogo: string;
-    cards: Card[]; // Định nghĩa chính xác kiểu dữ liệu cho cards
-  }
+  cardCode: string;
+  cardLogo: string;
+  periods: {
+    duration: number;
+    monthly_installment: number;
+    order_diffrence_amount: number;
+    order_loan_amount: number;
+    order_prepay_amount: number;
+    order_total_amount: number;
+    real_interest_rate: number;
+    processing_fee: number;
+    processing_fee_per_month: number;
+  }[];
+}
+
+interface Bank {
+  bankName: string;
+  bankCode: string;
+  bankLogo: string;
+  cards: Card[]; // Định nghĩa chính xác kiểu dữ liệu cho cards
+}
 export default function Home() {
-  const [banks, setBanks] = useState <Bank[]>([]);
-  const [selectedBank, setSelectedBank] = useState<Bank | null>(null);;
+  const [banks, setBanks] = useState<Bank[]>([]);
+  const [selectedBank, setSelectedBank] = useState<Bank | null>(null);
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
+  const [value, ] = useState();
 
   // Define GraphQL query and variables
   const query = `
@@ -103,64 +105,72 @@ export default function Home() {
   };
 
   // Handle selecting a card type
-  const handleCardSelection = (type: any) => {
-    setSelectedCard(type);
-    alert(`${type} selected`);
+  const handleCardSelection = (card: any) => {
+    setSelectedCard(card);
+    alert(`${card} selected`);
   };
+  console.log("check bank",banks)
+  console.log("check select bank",selectedBank)
+  console.log("check card",selectedCard)
   console.log(selectedBank);
   return (
-    <div style={{textAlign:"center",backgroundColor:"#fff897"}}>
-    <h1 style={{fontSize:40,paddingTop:20}}> BẢNG TRẢ GÓP THAM KHẢO</h1>
+    <div style={{ textAlign: "center", backgroundColor: "#fff897" }}>
+      <h1 style={{ fontSize: 40, paddingTop: 20 }}> BẢNG TRẢ GÓP THAM KHẢO</h1>
 
-    <div className={styles.container}>
-
-      <div className={styles.grid}>
-        {banks?.map((bank: any, index: any) => (
-          <div
-            key={index}
-            className={`${styles.bankCard} ${
-              selectedBank && selectedBank.bankCode === bank.bankCode
-                ? styles.selected
-                : ""
-            }`}
-            onClick={() => handleBankSelection(bank)}
-          >
-            <Image
-              src={bank.bankLogo}
-              alt={bank.bankName}
-              className={styles.bankLogo}
-              height={200}
-              width={200}
-            />
-            {/* <p>{bank.bankName}</p> */}
-          </div>
-        ))}
-      </div>
-
-      {/* Chỉ hiển thị các lựa chọn thẻ thanh toán nếu đã chọn ngân hàng */}
-      {selectedBank && (
-        <div className={styles.paymentOptions}>
-          <p>Chọn loại thẻ thanh toán cho {selectedBank?.bankName}:</p>
-          <div className={styles.sub}>
-          {selectedBank?.cards?.map((card: any, index: number) => (
-            // Đừng quên trả về phần tử JSX từ hàm map
-            <div className={styles.Imageboder} key={index}>
-                <Image
-              key={index}
-              src={card.cardLogo} // Đường dẫn logo của thẻ (từ API)
-              alt={card.cardCode}
-              className={styles.cardLogo}
-              width={100}
-              height={100}
-              onClick={() => handleCardSelection(card.cardCode)} // Xử lý khi người dùng chọn thẻ
-            />
-            </div>
-            
-          ))}
-          </div>
+      <div className={styles.container}>
+        <div style={{display:"flex",justifyContent:"center",alignItems:"center",marginBottom:20, gap:10}}>
+          <Input
+            placeholder="điền số tiền bạn muốn vay"
+          />
+          <button style={{backgroundColor:"#333",padding:5,borderRadius:10,color:"white"  }}>Search</button>
         </div>
-      )}
-    </div>
+
+        <div className={styles.grid}>
+          {banks?.map((bank: any, index: any) => (
+            <div
+              key={index}
+              className={`${styles.bankCard} ${
+                selectedBank && selectedBank.bankCode === bank.bankCode
+                  ? styles.selected
+                  : ""
+              }`}
+              onClick={() => handleBankSelection(bank)}
+            >
+              <Image
+                src={bank.bankLogo}
+                alt={bank.bankName}
+                className={styles.bankLogo}
+                height={200}
+                width={200}
+              />
+              {/* <p>{bank.bankName}</p> */}
+            </div>
+          ))}
+        </div>
+
+        {/* Chỉ hiển thị các lựa chọn thẻ thanh toán nếu đã chọn ngân hàng */}
+        {selectedBank && (
+          <div className={styles.paymentOptions}>
+            <p>Chọn loại thẻ thanh toán cho {selectedBank?.bankName}:</p>
+            <div className={styles.sub}>
+              {selectedBank?.cards?.map((card: any, index: number) => (
+                // Đừng quên trả về phần tử JSX từ hàm map
+                <div className={styles.Imageboder} key={index}>
+                  <Image
+                    key={index}
+                    src={card.cardLogo} // Đường dẫn logo của thẻ (từ API)
+                    alt={card.cardCode}
+                    className={styles.cardLogo}
+                    width={100}
+                    height={100}
+                    onClick={() => handleCardSelection(card)} // Xử lý khi người dùng chọn thẻ
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

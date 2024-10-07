@@ -8,15 +8,14 @@ import banner3 from "../../../public/Images/BOX-TRAGOP-5-150624 (1).png"
 export default function BannerHeader() {
 
   return (
-    <div style={{display:"flex",justifyContent:'center',backgroundColor:"#fff897"}}>
-      <div className="BuyInInstallments-Section1-Container">
-        <Image
+    <div style={{display:"flex",flexDirection:"column",alignItems:'center',backgroundColor:"#fff897"}}>
+      <div>
+      <Image
           className="BuyInInstallments-Section1-bg1"
           src="https://bachlongmobile.com/bnews/wp-content/uploads/2024/08/HEAD-TRAGOP-2024-1920-030824.png"
           alt=""
           width={1920}
-          height={1080}
-                     />
+          height={1080}/>
         <Image
           className="BuyInInstallments-Section1-bg2"
           src="https://bachlongmobile.com/bnews/wp-content/uploads/2024/08/HEAD-TRAGOP-2024-900-030824.png"
@@ -24,6 +23,9 @@ export default function BannerHeader() {
           width={900}
           height={506}
                      />
+      </div>
+  
+      <div className="BuyInInstallments-Section1-Container">
         <Image
           className="BuyInInstallments-S1-ImageBG"
           src="https://bachlongmobile.com/bnews/wp-content/uploads/2024/06/BOX-TRAGOP-8-150624.png"
