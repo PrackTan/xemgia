@@ -39,6 +39,7 @@ interface Bank {
 export default function Home() {
 	const [banks, setBanks] = useState<Bank[]>([]);
   const [banks2, setBanks2] = useState<Bank[]>([]);
+  const [banks3, setBanks3] = useState<Bank[]>([]);
 	const [selectedBank, setSelectedBank] = useState<Bank | null>(null);
   const [selectedBank2, setSelectedBank2] = useState<Bank | null>(null);
 	const [selectedCard, setSelectedCard] = useState<Card | null>(null);
@@ -202,7 +203,9 @@ const variable2 = {
 	}, [triggerSearch, variables]); // Gọi lại API khi `triggerSearch` thay đổi
 
 
-  
+  useEffect(()=>{
+    
+  },[])
   useEffect(() => {
     const fetchBanks2 = async () => {
       if (triggerSearch) {
@@ -477,6 +480,7 @@ const variable2 = {
 												<Card data={item} index={index} priceorigin={variables.total_amount} />
 											</SwiperSlide>
 										))}
+
 									</Swiper>
 								</div>
 							)}
