@@ -1,11 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../Styles/Home.module.css";
 import Image from "next/image";
 import { Input } from "antd";
 import Card from "../card/Card";
-import Card1 from "../card/Card1";
-
 import { Swiper, SwiperSlide } from "swiper/react"; // Import Swiper components
 import "swiper/swiper-bundle.css"; // Import Swiper styles
 import { Navigation } from "swiper/modules";
@@ -36,9 +34,9 @@ export default function Home() {
   const [banks, setBanks] = useState<Bank[]>([]);
   const [selectedBank, setSelectedBank] = useState<Bank | null>(null);
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
-  const [value,setValue] = useState("20000000");
+  const [value, setValue] = useState("20000000");
+  const [displayValue, setDisplayValue] = useState(""); // Giá trị hiển thị (có dấu chấm)
   const [triggerSearch, setTriggerSearch] = useState(true); // Trạng thái để gọi API
-
 
   // Define GraphQL query and variables
   const query = `
@@ -69,86 +67,15 @@ export default function Home() {
     }
   `;
 
-    const variables = {
-      loan_amount:parseInt(value),
-      total_amount: parseInt(value),  
-    };
+  const variables = {
+    loan_amount: parseInt(value),
+    total_amount: parseInt(value),
+  };
   // const variables = {
   //   loan_amount:0,
-  //   total_amount: 0,  
+  //   total_amount: 0,
   // };
-  console.log("check variables",variables.loan_amount)
-  // Fetch bank data via GraphQL
-  // useEffect(() => {
-  //   const fetchBanks = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         "https://beta-api.bachlongmobile.com/graphql",
-  //         {
-  //           method: "POST",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify({
-  //             query: query,
-  //             variables: variables,
-  //           }),
-  //         }
-  //       );
-
-  //       const responseData = await response.json();
-  //       if (responseData.data && responseData.data.getInstallmentInfoByCredit) {
-  //         const bankData = responseData.data.getInstallmentInfoByCredit;
-  //         setBanks(bankData); // Assuming bankData contains the correct array of banks
-  //       } else {
-  //         console.error("No data returned from API");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching bank data:", error);
-  //     }
-  //   };
-
-  //   fetchBanks();
-  // }, [variables]);
-  // useEffect(() => {
-  //   const fetchBanks = async () => {
-  //     if (triggerSearch) {
-  //       try {
-  //         const response = await fetch(
-  //           "https://beta-api.bachlongmobile.com/graphql",
-  //           {
-  //             method: "POST",
-  //             headers: {
-  //               "Content-Type": "application/json",
-  //             },
-  //             body: JSON.stringify({
-  //               query: query,
-  //               variables: variables,
-  //             }),
-  //           }
-  //         );
-
-  //         const responseData = await response.json();
-  //         if (
-  //           responseData.data &&
-  //           responseData.data.getInstallmentInfoByCredit
-  //         ) {
-  //           const bankData = responseData.data.getInstallmentInfoByCredit;
-  //           setBanks(bankData);
-  //         } else {
-  //           console.error("No data returned from API");
-  //         }
-  //       } catch (error) {
-  //         console.error("Error fetching bank data:", error);
-  //       }
-  //       setTriggerSearch(false); // Đặt lại trạng thái để không gọi lại API nữa
-      
-  //     }
-  //   };
-    
-  //   fetchBanks();
-  // }, [triggerSearch, variables]); // Gọi lại API khi `triggerSearch` thay đổi
-  
+  console.log("check variables", variables.loan_amount);
   useEffect(() => {
     const fetchBanks = async () => {
       if (triggerSearch) {
@@ -195,8 +122,6 @@ export default function Home() {
     fetchBanks();
   }, [triggerSearch, variables]); // Gọi lại API khi `triggerSearch` thay đổi
 
-
-  
   console.log(banks);
   const handleSearch = () => {
     if (value) {
@@ -216,11 +141,29 @@ export default function Home() {
   const handleCardSelection = (card: any) => {
     setSelectedCard(card);
   };
+  const formatNumber = (value: any) => {
+    // Loại bỏ dấu chấm trong số nhập vào
+    let rawValue = value.replace(/\./g, "");
+
+    // Cập nhật giá trị thực
+    setValue(rawValue);
+
+    // Định dạng lại số với dấu chấm (thêm dấu chấm vào mỗi 3 chữ số)
+    let formattedValue = rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    // Cập nhật giá trị hiển thị
+    setDisplayValue(formattedValue);
+  };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    // Gọi hàm formatNumber để định dạng và lưu giá trị
+    formatNumber(value);
+  };
   console.log("check bank", banks);
   console.log("check select bank", selectedBank);
   console.log("check card", selectedCard?.periods);
   console.log(selectedBank);
-  console.log("check value input",value)
+  console.log("check value input", value);
   return (
     <div style={{ textAlign: "center", backgroundColor: "#fff897" }}>
       <h1 style={{ fontSize: 40, padding: 20 }}> BẢNG TRẢ GÓP THAM KHẢO</h1>
@@ -235,7 +178,11 @@ export default function Home() {
             gap: 10,
           }}
         >
-          <Input placeholder="điền số tiền bạn muốn vay" onChange={(e)=>setValue(e.target.value)}/>
+          <Input
+            placeholder="điền số tiền bạn muốn vay"
+            value={displayValue}
+            onChange={handleInputChange}
+          />
           <button
             style={{
               backgroundColor: "#333",
@@ -244,7 +191,6 @@ export default function Home() {
               color: "white",
             }}
             onClick={handleSearch} // Gọi hàm handleSearch khi nhấn nút
-
           >
             Search
           </button>
@@ -297,85 +243,28 @@ export default function Home() {
         )}
         {selectedCard && (
           <div className="container" style={{ marginTop: 20 }}>
-            <h2 style={{padding:20,fontSize:20,fontWeight:"bold"}}>Chọn 1 trong {selectedCard.periods.length} gói tham khảo</h2>
+            <h2 style={{ padding: 20, fontSize: 20, fontWeight: "bold" }}>
+              Chọn 1 trong {selectedCard.periods.length} gói tham khảo
+            </h2>
             <Swiper
               navigation={true}
               modules={[Navigation]}
               className="mySwiper"
               slidesPerView={2.2}
               spaceBetween={12}
-              style={{display:"flex"}}
+              style={{ display: "flex" }}
             >
               {selectedCard?.periods.map((item: any, index: number) => (
-                <SwiperSlide key={index} style={{display:"flex !important"}}>
-                  <Card data={item} index={index} priceorigin={variables.total_amount}/>
+                <SwiperSlide key={index} style={{ display: "flex !important" }}>
+                  <Card
+                    data={item}
+                    index={index}
+                    priceorigin={variables.total_amount}
+                  />
                 </SwiperSlide>
               ))}
             </Swiper>
           </div>
-          // <Swiper slidesPerView={2.2} spaceBetween={12} className="mySwiper">
-          //   {selectedCard?.periods.map((item: any, index: number) => (
-          //     <SwiperSlide
-          //       key={index}
-          //       style={{ display: "flex !important" }}
-          //       className="slide-container"
-          //     >
-          //       <div className="flex-column">
-          //         <div className="flex-center">
-          //           <div className="index-box">
-          //             <span className="index-text">
-          //               {index + 1}
-          //             </span>
-          //           </div>
-          //           <div className="details">
-          //             <p className="info">
-          //               <span className="text-sm">Tổng tiền trả góp</span>
-          //               <span className="text-lg font-bold">
-          //                 {data?.loan.toLocaleString("vi-VN")} VNĐ
-          //               </span>
-          //             </p>
-          //             <span className="text-sm">
-          //               Kỳ hạn {"{"}option.month{"}"}
-          //             </span>
-          //           </div>
-          //         </div>
-          //         <p className="info-line">
-          //           <span className="text-sm">Giá trị đơn hàng</span>
-          //           <span className="font-semibold">
-          //             {"{"}productPrice.toLocaleString("vi-VN"){"}"} VNĐ
-          //           </span>
-          //         </p>
-          //         <p className="info-line">
-          //           <span className="text-sm">Giá trả góp</span>
-          //           <span className="font-semibold">
-          //             {"{"}data?.loan.toLocaleString("vi-VN"){"}"} VNĐ
-          //           </span>
-          //         </p>
-          //         <p className="info-line">
-          //           <span className="text-sm">Góp mỗi tháng</span>
-          //           <span className="highlight">
-          //             {"{"}Number(option.moneyofmonth).toLocaleString("vi-VN")
-          //             {"}"} VNĐ
-          //           </span>
-          //         </p>
-          //         <p className="info-line">
-          //           <span className="text-sm">Chênh lệch trả thẳng</span>
-          //           <span className="font-semibold">
-          //             {"{"}Number(option.interest).toLocaleString("vi-VN"){"}"}{" "}
-          //             VNĐ
-          //           </span>
-          //         </p>
-          //         <p className="info-line">
-          //           <span className="text-sm">Thanh toán khi nhận máy</span>
-          //           <span className="font-semibold">
-          //             {"{"}data?.loan.toLocaleString("vi-VN"){"}"} VNĐ
-          //           </span>
-          //         </p>
-          //         <button className="select-button">Chọn</button>
-          //       </div>
-          //     </SwiperSlide>
-          //   ))}
-          // </Swiper>
         )}
       </div>
     </div>
