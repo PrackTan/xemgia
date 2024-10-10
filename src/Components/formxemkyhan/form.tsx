@@ -196,8 +196,8 @@ query GetInstallmentInfo(
             //     setSelectedCard(bankData[0].cards[0]); // Chọn card đầu tiên của bank đầu tiên
             //   }
             // }
-        //   } else {
-        //     console.error("No data returned from API");
+            //   } else {
+            //     console.error("No data returned from API");
           }
         } catch (error) {
           console.error("Error fetching bank data:", error);
@@ -282,15 +282,14 @@ query GetInstallmentInfo(
         } catch (error) {
           console.error("Error fetching bank data:", error);
           setLoading(false);
-        }finally{
-			setLoading(false);
-
-		}
+        } finally {
+          setLoading(false);
+        }
         setTriggerSearch(false); // Reset lại triggerSearch2 sau khi gọi API
       }
     };
     fetchBank3();
-  }, [triggerSearch,selectedBank3?.endpoint, selectedBank3?.price]);
+  }, [triggerSearch, selectedBank3?.endpoint, selectedBank3?.price]);
 
   const handleSearch = () => {
     if (value) {
@@ -308,15 +307,15 @@ query GetInstallmentInfo(
   };
 
   const handleBankSelection2 = (bank2: any) => {
-	setSelectedBank2(bank2);
-	setSelectedBank3(null); // Khi chọn bank2, ẩn bank3
+    setSelectedBank2(bank2);
+    setSelectedBank3(null); // Khi chọn bank2, ẩn bank3
     console.log("check bank2 name", selectedBank2);
   };
   // console.log("check bank2",banks2.bankCode);
   // Handle selecting a card type
   const handleBankSelection3 = (bank3: any) => {
-	setSelectedBank3(bank3);
-	setSelectedBank2(null); // Khi chọn bank3, ẩn bank2
+    setSelectedBank3(bank3);
+    setSelectedBank2(null); // Khi chọn bank3, ẩn bank2
     console.log("check bank3 name", bank3);
   };
   const handleCardSelection = (card: any) => {
@@ -423,7 +422,11 @@ query GetInstallmentInfo(
                 {banks?.map((bank: any, index: any) => (
                   <div
                     key={index}
-                    className={`${styles.bankCard} ${selectedBank && selectedBank.bankCode === bank.bankCode ? styles.selectedBox : ""}`}
+                    className={`${styles.bankCard} ${
+                      selectedBank && selectedBank.bankCode === bank.bankCode
+                        ? styles.selectedBox
+                        : ""
+                    }`}
                     onClick={() => handleBankSelection(bank)}
                   >
                     <Image
@@ -445,11 +448,15 @@ query GetInstallmentInfo(
                   <div className={styles.sub}>
                     {selectedBank?.cards?.map((card: any, index: number) => (
                       // Đừng quên trả về phần tử JSX từ hàm map
-                      <div className={`${styles.Imageboder} ${
-						selectedCard && selectedCard.cardCode === card.cardCode
-						  ? styles.selectedBox
-						  : ""
-					  }`} key={index}>
+                      <div
+                        className={`${styles.Imageboder} ${
+                          selectedCard &&
+                          selectedCard.cardCode === card.cardCode
+                            ? styles.selectedBox
+                            : ""
+                        }`}
+                        key={index}
+                      >
                         <Image
                           key={index}
                           src={card.cardLogo} // Đường dẫn logo của thẻ (từ API)
@@ -473,7 +480,21 @@ query GetInstallmentInfo(
                     navigation={true}
                     modules={[Navigation]}
                     className="mySwiper"
-                    slidesPerView={2.2}
+                    slidesPerView="auto"
+                    breakpoints={{
+                      640: {
+                        slidesPerView: 1.5,
+                        spaceBetween: 20,
+                      },
+                      768: {
+                        slidesPerView: 2,
+                        spaceBetween: 40,
+                      },
+                      1024: {
+                        slidesPerView: 2.2,
+                        spaceBetween: 50,
+                      },
+                    }}
                     spaceBetween={12}
                     style={{ display: "flex" }}
                   >
@@ -504,7 +525,11 @@ query GetInstallmentInfo(
                 {data?.map((bank2: any, index: any) => (
                   <div
                     key={index}
-                    className={`${styles.bankCard} ${selectedBank2 && selectedBank2.bankCode === bank2.bankCode ? styles.selectedBox : ""}`}
+                    className={`${styles.bankCard} ${
+                      selectedBank2 && selectedBank2.bankCode === bank2.bankCode
+                        ? styles.selectedBox
+                        : ""
+                    }`}
                     onClick={() => handleBankSelection2(bank2)}
                   >
                     <Image
@@ -523,7 +548,11 @@ query GetInstallmentInfo(
                 {data1?.map((bank3: any, index: any) => (
                   <div
                     key={index}
-                    className={`${styles.bankCard} ${selectedBank3 && selectedBank3.bankCode === bank3.bankCode ? styles.selectedBox : ""}`}
+                    className={`${styles.bankCard} ${
+                      selectedBank3 && selectedBank3.bankCode === bank3.bankCode
+                        ? styles.selectedBox
+                        : ""
+                    }`}
                     onClick={() => handleBankSelection3(bank3)}
                   >
                     <Image
@@ -546,9 +575,21 @@ query GetInstallmentInfo(
                     navigation={true}
                     modules={[Navigation]}
                     className="mySwiper"
-                    slidesPerView={2.2}
-                    spaceBetween={12}
                     style={{ display: "flex" }}
+                    breakpoints={{
+                      640: {
+                        slidesPerView: 1.5,
+                        spaceBetween: 20,
+                      },
+                      768: {
+                        slidesPerView: 1,
+                        spaceBetween: 40,
+                      },
+                      1024: {
+                        slidesPerView: 2.2,
+                        spaceBetween: 50,
+                      },
+                    }}
                   >
                     {banks2?.map((item: any, index: number) => (
                       <SwiperSlide
@@ -565,7 +606,7 @@ query GetInstallmentInfo(
                   </Swiper>
                 </div>
               )}
-			    {selectedBank2 === null && banks3 && banks3.item && (
+              {selectedBank2 === null && banks3 && banks3.item && (
                 <div className="container" style={{ marginTop: 20 }}>
                   <h2 style={{ padding: 20, fontSize: 20, fontWeight: "bold" }}>
                     Chọn 1 trong {banks3.item.length} gói tham khảo
@@ -574,9 +615,21 @@ query GetInstallmentInfo(
                     navigation={true}
                     modules={[Navigation]}
                     className="mySwiper"
-                    slidesPerView={2.2}
-                    spaceBetween={12}
                     style={{ display: "flex" }}
+                    breakpoints={{
+                      640: {
+                        slidesPerView: 1.5,
+                        spaceBetween: 20,
+                      },
+                      768: {
+                        slidesPerView: 2,
+                        spaceBetween: 40,
+                      },
+                      1024: {
+                        slidesPerView: 2.2,
+                        spaceBetween: 50,
+                      },
+                    }}
                   >
                     {banks3.item.map((item: any, index: number) => (
                       <SwiperSlide
