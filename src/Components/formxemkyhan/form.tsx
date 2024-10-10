@@ -190,14 +190,14 @@ query GetInstallmentInfo(
             setBanks(bankData);
 
             // Tự động chọn bank và card đầu tiên sau khi nhận dữ liệu
-            if (bankData.length > 0) {
-              setSelectedBank(bankData[0]); // Chọn bank đầu tiên
-              if (bankData[0].cards.length > 0) {
-                setSelectedCard(bankData[0].cards[0]); // Chọn card đầu tiên của bank đầu tiên
-              }
-            }
-          } else {
-            console.error("No data returned from API");
+            // if (bankData.length > 0) {
+            //   setSelectedBank(bankData[0]); // Chọn bank đầu tiên
+            //   if (bankData[0].cards.length > 0) {
+            //     setSelectedCard(bankData[0].cards[0]); // Chọn card đầu tiên của bank đầu tiên
+            //   }
+            // }
+        //   } else {
+        //     console.error("No data returned from API");
           }
         } catch (error) {
           console.error("Error fetching bank data:", error);
@@ -423,11 +423,7 @@ query GetInstallmentInfo(
                 {banks?.map((bank: any, index: any) => (
                   <div
                     key={index}
-                    className={`${styles.bankCard} ${
-                      selectedBank && selectedBank.bankCode === bank.bankCode
-                        ? styles.selected
-                        : ""
-                    }`}
+                    className={`${styles.bankCard} ${selectedBank && selectedBank.bankCode === bank.bankCode ? styles.selectedBox : ""}`}
                     onClick={() => handleBankSelection(bank)}
                   >
                     <Image
@@ -449,7 +445,11 @@ query GetInstallmentInfo(
                   <div className={styles.sub}>
                     {selectedBank?.cards?.map((card: any, index: number) => (
                       // Đừng quên trả về phần tử JSX từ hàm map
-                      <div className={styles.Imageboder} key={index}>
+                      <div className={`${styles.Imageboder} ${
+						selectedCard && selectedCard.cardCode === card.cardCode
+						  ? styles.selectedBox
+						  : ""
+					  }`} key={index}>
                         <Image
                           key={index}
                           src={card.cardLogo} // Đường dẫn logo của thẻ (từ API)
@@ -504,11 +504,7 @@ query GetInstallmentInfo(
                 {data?.map((bank2: any, index: any) => (
                   <div
                     key={index}
-                    className={`${styles.bankCard} ${
-                      selectedBank && selectedBank.bankCode === bank2.bankCode
-                        ? styles.selected
-                        : ""
-                    }`}
+                    className={`${styles.bankCard} ${selectedBank2 && selectedBank2.bankCode === bank2.bankCode ? styles.selectedBox : ""}`}
                     onClick={() => handleBankSelection2(bank2)}
                   >
                     <Image
@@ -527,11 +523,7 @@ query GetInstallmentInfo(
                 {data1?.map((bank3: any, index: any) => (
                   <div
                     key={index}
-                    className={`${styles.bankCard} ${
-                      selectedBank && selectedBank.bankCode === bank3.bankCode
-                        ? styles.selected
-                        : ""
-                    }`}
+                    className={`${styles.bankCard} ${selectedBank3 && selectedBank3.bankCode === bank3.bankCode ? styles.selectedBox : ""}`}
                     onClick={() => handleBankSelection3(bank3)}
                   >
                     <Image
