@@ -1,76 +1,80 @@
 .BuyInInstallments-Section1-bg2 {
-    display: none;
-  }
-  .BuyInInstallments-Section1-logo {
-    width: 160px !important;
-  }
-  .BuyInInstallments-Section1-Container {
-    background-color: #fff897;
-    width: 1200px;
-  }
-  .BuyInInstallments-S1-Image {
-    width: 49% !important;
-    display: block;
-    border-radius: 10px;
-  }
+  display: none;
+}
+.BuyInInstallments-Section1-logo {
+  width: 160px !important;
+}
+.BuyInInstallments-Section1-Container {
+  background-color: #fff897;
+  width: 1200px;
+}
+.BuyInInstallments-S1-Image {
+  width: 49% !important;
+  display: block;
+  border-radius: 10px;
+}
+.BuyInInstallments-S1-ImageBG {
+  width: 70vw !important;
+  display: block;
+  margin: auto;
+}
+@media (max-width: 900px) {
   .BuyInInstallments-S1-ImageBG {
-    width: 70vw !important;
+    width: 95vw !important;
     display: block;
     margin: auto;
   }
-  .wrapper-banner2{
-    display: flex;
-    justify-content: center;
-    gap:10px;
+}
+.wrapper-banner2 {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.doublebanner {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 10px 0 0 0;
+  gap: 10px;
+}
+.bannerline1 {
+  display: flex;
+  flex-direction: column;
+  width: 35vw !important;
+}
+.bannerline2 {
+  width: 35vw !important;
+}
+@media (max-width: 1000px) {
+  .BuyInInstallments-Section1-bg2 {
+    display: block;
   }
-  .doublebanner{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin: 10px 0 0 0;
-    gap: 10px;
-  } 
-  .bannerline1{
-    display: flex;
-    flex-direction: column;
+  .BuyInInstallments-Section1-bg1 {
+    display: none;
+  }
+  .BuyInInstallments-Section1-Container {
+    width: 80vw !important;
+    overflow: hidden;
+    margin: auto;
+  }
+  .BuyInInstallments-S1-Image {
     width: 35vw !important;
+    display: block;
+    /* margin: 10px 5vw auto auto; */
+  }
+}
 
+@media (max-width: 768px) {
+  .BuyInInstallments-Section1-Container {
+    width: 100vw !important;
   }
-  .bannerline2{
-    width: 35vw !important;
+  .bannerline1 {
+    width: 44vw !important;
   }
-  @media (max-width: 1000px) {
-    .BuyInInstallments-Section1-bg2 {
-      display: block;
-    }
-    .BuyInInstallments-Section1-bg1 {
-      display: none;
-    }
-    .BuyInInstallments-Section1-Container {
-      width: 80vw !important;
-      overflow: hidden;
-      margin: auto;
-    }
-    .BuyInInstallments-S1-Image {
-      width: 35vw !important;
-      display: block;
-      margin: 10px 5vw auto auto;
-    }
+  .bannerline2 {
+    width: 44vw !important;
   }
-  
-  /* @media (max-width: 768px) {
-    .BuyInInstallments-Section1-Container {
-      width: 100vw !important;
-    }
-    .BuyInInstallments-S1-Image {
-      width: 35vw !important;
-      display: block;
-      margin: 10px 15vw auto auto;
-    }
-    .BuyInInstallments-S1-ImageBG {
-      width: 90vw !important;
-      display: block;
-      margin: auto;
-    }
-  } */
-  
+  .BuyInInstallments-S1-Image {
+    width: 45vw !important;
+  }
+}
