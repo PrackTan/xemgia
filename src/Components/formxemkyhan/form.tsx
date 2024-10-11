@@ -261,7 +261,6 @@ query GetInstallmentInfo(
     const fetchBank3 = async () => {
       if (triggerSearch) {
         setLoading(true);
-
         try {
           const response = await fetch(
             "https://script.google.com/macros/s/AKfycbxhuz9VahdzgRylHAa_Q20uaMx_bHWbPUBCw6jgHohyhQP0gHE9IBZCe3i2JZfUWWbQ/exec",
@@ -276,13 +275,11 @@ query GetInstallmentInfo(
           );
           const responseData = await response.json();
           console.log("check response 3", responseData);
-          //   setLoading(false);
           const bankData = responseData;
           setBanks3(bankData);
+          setLoading(false);
         } catch (error) {
           console.error("Error fetching bank data:", error);
-          setLoading(false);
-        } finally {
           setLoading(false);
         }
         setTriggerSearch(false); // Reset lại triggerSearch2 sau khi gọi API
