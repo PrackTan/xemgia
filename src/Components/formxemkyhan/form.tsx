@@ -48,10 +48,12 @@ export default function Home() {
   const [banks, setBanks] = useState<Bank[]>([]);
   const [banks2, setBanks2] = useState<Bank[]>([]);
   const [banks3, setBanks3] = useState<any>(null);
+  const [data1, setData1] = useState([]);
   const [selectedBank, setSelectedBank] = useState<Bank | null>(null);
   const [selectedBank2, setSelectedBank2] = useState<Bank | null>(null);
   const [selectedBank3, setSelectedBank3] = useState<Bank1 | null>(null);
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
+  const [showFinancialCompanies, setShowFinancialCompanies] = useState(false); // Trạng thái hiển thị công ty tài chính
   const [value, setValue] = useState("20000000");
   const [displayValue, setDisplayValue] = useState(""); // Giá trị hiển thị (có dấu chấm)
   const [triggerSearch, setTriggerSearch] = useState(true); // Trạng thái để gọi API
@@ -66,37 +68,84 @@ export default function Home() {
       bankCode: "muadee_payment",
       bankLogo: mudeee,
     },
+    {
+      bankCode: "test",
+      bankLogo: "",
+      bankLogo1: (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: 12,
+          }}
+        >
+          <span className={styles.money}>$</span>
+          <span style={{ marginLeft: 2 }}>Công ty tài chính</span>
+        </div>
+      ),
+      bank: [
+        {
+          bankCode: "shinhan",
+          bankLogo: shinhan,
+          endpoint: "shinhan",
+          price: parseInt(value),
+          cost: 0,
+        },
+        {
+          bankCode: "mcredit",
+          bankLogo: mcredit,
+          endpoint: "mcredit",
+          price: parseInt(value),
+          cost: 0,
+        },
+        {
+          bankCode: "homecredit",
+          bankLogo: homecredit,
+          endpoint: "homecredit",
+          price: parseInt(value),
+          cost: 0,
+        },
+        {
+          bankCode: "hdsg",
+          bankLogo: hdsaigon,
+          endpoint: "hdsg",
+          price: parseInt(value),
+          cost: 0,
+        },
+      ],
+    },
   ];
-  const data1 = [
-    {
-      bankCode: "shinhan",
-      bankLogo: shinhan,
-      endpoint: "shinhan",
-      price: parseInt(value),
-      cost: 0,
-    },
-    {
-      bankCode: "mcredit",
-      bankLogo: mcredit,
-      endpoint: "mcredit",
-      price: parseInt(value),
-      cost: 0,
-    },
-    {
-      bankCode: "homecredit",
-      bankLogo: homecredit,
-      endpoint: "homecredit",
-      price: parseInt(value),
-      cost: 0,
-    },
-    {
-      bankCode: "hdsg",
-      bankLogo: hdsaigon,
-      endpoint: "hdsg",
-      price: parseInt(value),
-      cost: 0,
-    },
-  ];
+  // const data1 = [
+  //   {
+  //     bankCode: "shinhan",
+  //     bankLogo: shinhan,
+  //     endpoint: "shinhan",
+  //     price: parseInt(value),
+  //     cost: 0,
+  //   },
+  //   {
+  //     bankCode: "mcredit",
+  //     bankLogo: mcredit,
+  //     endpoint: "mcredit",
+  //     price: parseInt(value),
+  //     cost: 0,
+  //   },
+  //   {
+  //     bankCode: "homecredit",
+  //     bankLogo: homecredit,
+  //     endpoint: "homecredit",
+  //     price: parseInt(value),
+  //     cost: 0,
+  //   },
+  //   {
+  //     bankCode: "hdsg",
+  //     bankLogo: hdsaigon,
+  //     endpoint: "hdsg",
+  //     price: parseInt(value),
+  //     cost: 0,
+  //   },
+  // ];
   // Define GraphQL query and variables
   const query = `
     query GetInstallmentInfoByCredit(
@@ -188,16 +237,6 @@ query GetInstallmentInfo(
           ) {
             const bankData = responseData.data.getInstallmentInfoByCredit;
             setBanks(bankData);
-
-            // Tự động chọn bank và card đầu tiên sau khi nhận dữ liệu
-            // if (bankData.length > 0) {
-            //   setSelectedBank(bankData[0]); // Chọn bank đầu tiên
-            //   if (bankData[0].cards.length > 0) {
-            //     setSelectedCard(bankData[0].cards[0]); // Chọn card đầu tiên của bank đầu tiên
-            //   }
-            // }
-            //   } else {
-            //     console.error("No data returned from API");
           }
         } catch (error) {
           console.error("Error fetching bank data:", error);
@@ -208,7 +247,7 @@ query GetInstallmentInfo(
     };
 
     fetchBanks();
-  }, [triggerSearch, variables]); // Gọi lại API khi `triggerSearch` thay đổi
+  }, [triggerSearch, selectedBank, selectedCard, variables]); // Gọi lại API khi `triggerSearch` thay đổi
 
   useEffect(() => {
     const fetchBanks2 = async () => {
@@ -230,23 +269,13 @@ query GetInstallmentInfo(
           );
 
           const responseData = await response.json();
-          console.log("check response 2", responseData);
+          console.log(">>>>>>>>>>>>>BANK 2 ");
           setLoading(false);
-          const bankData = responseData.data.getInstallmentInfo;
-          setBanks2(bankData);
-          //    if (responseData.data && responseData.data) {
-          //   const bankData = responseData.data.getInstallmentInfo;
-          //   setBanks2(bankData);
-          //   // Tự động chọn bank và card đầu tiên sau khi nhận dữ liệu
-          //   if (bankData.length > 0) {
-          //     setSelectedBank2(bankData[0]); // Chọn bank đầu tiên
-          //   }
-          // } else {
-          //   console.error('No data returned from API');
-          // }
-          //   // Bạn có thể setBanks2 hoặc xử lý dữ liệu sau khi gọi API
+          if (responseData.data && responseData.data) {
+            const bankData = responseData.data.getInstallmentInfo;
+            setBanks2(bankData);
+          }
         } catch (error) {
-          console.error("Error fetching bank data:", error);
           setLoading(false);
         }
         setTriggerSearch(false); // Reset lại triggerSearch2 sau khi gọi API
@@ -254,9 +283,7 @@ query GetInstallmentInfo(
     };
 
     fetchBanks2();
-  }, [triggerSearch, variable2]); // Gọi lại API khi triggerSearch2 thay đổi
-  console.log("check banks2 ?>>>>>>>>>>>>>>>>>>>", banks2);
-
+  }, [variable2, selectedBank2, triggerSearch]); // Gọi lại API khi triggerSearch2 thay đổi
   useEffect(() => {
     const fetchBank3 = async () => {
       if (triggerSearch) {
@@ -274,7 +301,6 @@ query GetInstallmentInfo(
             }
           );
           const responseData = await response.json();
-          console.log("check response 3", responseData);
           const bankData = responseData;
           setBanks3(bankData);
           setLoading(false);
@@ -299,25 +325,28 @@ query GetInstallmentInfo(
   // Handle selecting a bank
   const handleBankSelection = (bank: any) => {
     setSelectedBank(bank);
-    console.log("check bank", bank);
     setSelectedCard(null); // Reset card selection when a new bank is selected
   };
 
   const handleBankSelection2 = (bank2: any) => {
     setSelectedBank2(bank2);
     setSelectedBank3(null); // Khi chọn bank2, ẩn bank3
-    console.log("check bank2 name", selectedBank2);
+    // Nếu chọn mục "Công ty tài chính" thì hiển thị các công ty tài chính
+    if (bank2.bankCode === "test") {
+      setShowFinancialCompanies(true);
+      setData1(bank2.bank); // Hiển thị danh sách các công ty tài chính từ data
+    } else {
+      setShowFinancialCompanies(false); // Ẩn danh sách công ty tài chính
+      setBanks2([]);
+    }
   };
-  // console.log("check bank2",banks2.bankCode);
-  // Handle selecting a card type
+  console.log("check data 1", data1);
   const handleBankSelection3 = (bank3: any) => {
     setSelectedBank3(bank3);
     setSelectedBank2(null); // Khi chọn bank3, ẩn bank2
-    console.log("check bank3 name", bank3);
   };
   const handleCardSelection = (card: any) => {
     setSelectedCard(card);
-    console.log("check card1 ", card);
   };
 
   const formatNumber = (value: any) => {
@@ -338,50 +367,22 @@ query GetInstallmentInfo(
     // Gọi hàm formatNumber để định dạng và lưu giá trị
     formatNumber(value);
   };
-  // console.log('check bank', banks);
-  // console.log('check select bank', selectedBank);
-  // console.log('check card', selectedCard?.periods);
-  // console.log(selectedBank);
-  // console.log('check value input', value);
-  console.log("check select bank3", selectedBank3);
+
   const [activeButton, setActiveButton] = useState<number>(1);
-  console.log("check bank2 name" + banks2);
   const handleButtonClick = (buttonId: number) => {
     setActiveButton(buttonId);
   };
-  console.log("check select bank2", selectedBank2);
+  console.log("check bank1", banks);
+  console.log("check bank2" + banks2);
   console.log("check bank3", banks3);
+  console.log("check select bank2", selectedBank2);
+  console.log("check select bank3", selectedBank3);
+
   return (
     <div style={{ textAlign: "center", backgroundColor: "#fff897" }}>
-      <h1 style={{ fontSize: 40, padding: 20 }}> BẢNG TRẢ GÓP THAM KHẢO</h1>
+      <h1 className={styles.title}> BẢNG TRẢ GÓP THAM KHẢO</h1>
 
       <div className={styles.container}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: 20,
-            gap: 10,
-          }}
-        >
-          <Input
-            placeholder="điền số tiền bạn muốn vay"
-            value={displayValue}
-            onChange={handleInputChange}
-          />
-          <button
-            style={{
-              backgroundColor: "#333",
-              padding: 5,
-              borderRadius: 10,
-              color: "white",
-            }}
-            onClick={handleSearch} // Gọi hàm handleSearch khi nhấn nút
-          >
-            Search
-          </button>
-        </div>
         <div className={`${"tabs_wrapper"}`}>
           <button
             className={`${"tab_item"} ${"button"}`}
@@ -427,7 +428,7 @@ query GetInstallmentInfo(
                     onClick={() => handleBankSelection(bank)}
                   >
                     <Image
-                      src={bank.bankLogo}
+                      src={bank?.bankLogo}
                       alt={bank.bankName}
                       className={styles.bankLogo}
                       height={200}
@@ -468,6 +469,32 @@ query GetInstallmentInfo(
                   </div>
                 </div>
               )}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginBottom: 20,
+                  gap: 10,
+                }}
+              >
+                <Input
+                  placeholder="điền số tiền bạn muốn vay"
+                  value={displayValue}
+                  onChange={handleInputChange}
+                />
+                <button
+                  style={{
+                    backgroundColor: "#333",
+                    padding: 5,
+                    borderRadius: 10,
+                    color: "white",
+                  }}
+                  onClick={handleSearch} // Gọi hàm handleSearch khi nhấn nút
+                >
+                  Search
+                </button>
+              </div>
               {selectedCard && (
                 <div className="container" style={{ marginTop: 20 }}>
                   <h2 style={{ padding: 20, fontSize: 20, fontWeight: "bold" }}>
@@ -529,42 +556,77 @@ query GetInstallmentInfo(
                     }`}
                     onClick={() => handleBankSelection2(bank2)}
                   >
-                    <Image
-                      src={bank2.bankLogo}
-                      alt={bank2.bankName}
-                      className={styles.bankLogo}
-                      height={200}
-                      width={200}
-                    />
+                    {bank2.bankLogo ? (
+                      <Image
+                        src={bank2?.bankLogo}
+                        alt={bank2.bankName}
+                        className={styles.bankLogo}
+                        height={200}
+                        width={200}
+                      />
+                    ) : (
+                      bank2.bankLogo1
+                    )}
+
                     {/* <p>{bank.bankName}</p> */}
                   </div>
                 ))}
               </div>
-              <span>Chọn công ty tài chính:</span>
-              <div className={styles.grid}>
-                {data1?.map((bank3: any, index: any) => (
-                  <div
-                    key={index}
-                    className={`${styles.bankCard} ${
-                      selectedBank3 && selectedBank3.bankCode === bank3.bankCode
-                        ? styles.selectedBox
-                        : ""
-                    }`}
-                    onClick={() => handleBankSelection3(bank3)}
-                  >
-                    <Image
-                      src={bank3.bankLogo}
-                      alt={bank3.bankName}
-                      className={styles.bankLogo}
-                      height={200}
-                      width={200}
-                    />
-                    {/* <p>{bank.bankName}</p> */}
+              {showFinancialCompanies && (
+                <>
+                  <span>Chọn công ty tài chính:</span>
+                  <div className={styles.grid}>
+                    {data1.map((bank3: any, index: any) => (
+                      <div
+                        key={index}
+                        className={`${styles.bankCard} ${
+                          selectedBank3 &&
+                          selectedBank3.bankCode === bank3.bankCode
+                            ? styles.selectedBox
+                            : ""
+                        }`}
+                        onClick={() => handleBankSelection3(bank3)}
+                      >
+                        <Image
+                          src={bank3.bankLogo}
+                          alt={bank3.bankName}
+                          className={styles.bankLogo}
+                          height={200}
+                          width={200}
+                        />
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </>
+              )}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginBottom: 20,
+                  gap: 10,
+                }}
+              >
+                <Input
+                  placeholder="điền số tiền bạn muốn vay"
+                  value={displayValue}
+                  onChange={handleInputChange}
+                />
+                <button
+                  style={{
+                    backgroundColor: "#333",
+                    padding: 5,
+                    borderRadius: 10,
+                    color: "white",
+                  }}
+                  onClick={handleSearch} // Gọi hàm handleSearch khi nhấn nút
+                >
+                  Search
+                </button>
               </div>
               {selectedBank3 === null && banks2 && (
-                <div className="container" style={{ marginTop: 20 }}>
+                <div style={{ marginTop: 20 }}>
                   <h2 style={{ padding: 20, fontSize: 20, fontWeight: "bold" }}>
                     Chọn 1 trong {banks2?.length} gói tham khảo
                   </h2>
@@ -603,8 +665,9 @@ query GetInstallmentInfo(
                   </Swiper>
                 </div>
               )}
+
               {selectedBank2 === null && banks3 && banks3.item && (
-                <div className="container" style={{ marginTop: 20 }}>
+                <div style={{ marginTop: 20 }}>
                   <h2 style={{ padding: 20, fontSize: 20, fontWeight: "bold" }}>
                     Chọn 1 trong {banks3.item.length} gói tham khảo
                   </h2>
