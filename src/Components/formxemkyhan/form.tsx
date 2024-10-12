@@ -57,6 +57,7 @@ export default function Home() {
   const [value, setValue] = useState("20000000");
   const [displayValue, setDisplayValue] = useState(""); // Giá trị hiển thị (có dấu chấm)
   const [triggerSearch, setTriggerSearch] = useState(true); // Trạng thái để gọi API
+  const [triggerSearch2, setTriggerSearch2] = useState(false); // Trạng thái để gọi API
   const [loading, setLoading] = useState(false);
 
   const data = [
@@ -116,36 +117,6 @@ export default function Home() {
       ],
     },
   ];
-  // const data1 = [
-  //   {
-  //     bankCode: "shinhan",
-  //     bankLogo: shinhan,
-  //     endpoint: "shinhan",
-  //     price: parseInt(value),
-  //     cost: 0,
-  //   },
-  //   {
-  //     bankCode: "mcredit",
-  //     bankLogo: mcredit,
-  //     endpoint: "mcredit",
-  //     price: parseInt(value),
-  //     cost: 0,
-  //   },
-  //   {
-  //     bankCode: "homecredit",
-  //     bankLogo: homecredit,
-  //     endpoint: "homecredit",
-  //     price: parseInt(value),
-  //     cost: 0,
-  //   },
-  //   {
-  //     bankCode: "hdsg",
-  //     bankLogo: hdsaigon,
-  //     endpoint: "hdsg",
-  //     price: parseInt(value),
-  //     cost: 0,
-  //   },
-  // ];
   // Define GraphQL query and variables
   const query = `
     query GetInstallmentInfoByCredit(
@@ -178,6 +149,7 @@ export default function Home() {
   const variables = {
     loan_amount: parseInt(value),
     total_amount: parseInt(value),
+    test: triggerSearch,
   };
   const query2 = `
 query GetInstallmentInfo(
@@ -237,18 +209,22 @@ query GetInstallmentInfo(
           ) {
             const bankData = responseData.data.getInstallmentInfoByCredit;
             setBanks(bankData);
+            // console.log(">>>>>>>>>>>>>>> check bank1 data ", banks);
+            // setSelectedCard(bankData.cards);
+            // console.log("check selected card>>>>>>>>", selectedCard);
+            // selectedCard()
           }
         } catch (error) {
           console.error("Error fetching bank data:", error);
           setLoading(false);
         }
-        setTriggerSearch(false); // Đặt lại trạng thái để không gọi lại API nữa
+        // setTriggerSearch(false);
       }
     };
 
     fetchBanks();
-  }, [triggerSearch, selectedBank, selectedCard, variables]); // Gọi lại API khi `triggerSearch` thay đổi
-
+    // }, [triggerSearch, selectedBank, selectedCard, variables]); // Gọi lại API khi `triggerSearch` thay đổi
+  }, [triggerSearch, variable2]); // Gọi lại API khi `triggerSearch` thay đổi
   useEffect(() => {
     const fetchBanks2 = async () => {
       if (triggerSearch) {
@@ -313,10 +289,57 @@ query GetInstallmentInfo(
     };
     fetchBank3();
   }, [triggerSearch, selectedBank3?.endpoint, selectedBank3?.price]);
-
-  const handleSearch = () => {
+  console.log("check selectcard?????????????????????", selectedCard);
+  const handleSearch = async () => {
     if (value) {
-      setTriggerSearch(true); // Đặt trigger để gọi API
+      setTriggerSearch(true);
+      setLoading(true);
+
+      try {
+        const response = await fetch(
+          "https://beta-api.bachlongmobile.com/graphql",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              query: query,
+              variables: {
+                loan_amount: parseInt(value),
+                total_amount: parseInt(value),
+              },
+            }),
+          }
+        );
+
+        const responseData = await response.json();
+        if (responseData.data && responseData.data.getInstallmentInfoByCredit) {
+          const bankData = responseData.data.getInstallmentInfoByCredit;
+          setBanks(bankData);
+
+          // Nếu đã có selectedBank và selectedCard, cập nhật chúng
+          if (selectedBank && selectedCard) {
+            const updatedBank = bankData.find(
+              (bank: Bank) => bank.bankCode === selectedBank.bankCode
+            );
+            if (updatedBank) {
+              setSelectedBank(updatedBank);
+              const updatedCard = updatedBank.cards.find(
+                (card: Card) => card.cardCode === selectedCard.cardCode
+              );
+              if (updatedCard) {
+                setSelectedCard(updatedCard);
+              }
+            }
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching updated data:", error);
+      } finally {
+        setLoading(false);
+        setTriggerSearch(false);
+      }
     } else {
       alert("Vui lòng điền số tiền muốn vay");
     }
@@ -327,7 +350,10 @@ query GetInstallmentInfo(
     setSelectedBank(bank);
     setSelectedCard(null); // Reset card selection when a new bank is selected
   };
-
+  const handleCardSelection = (card: any) => {
+    setSelectedCard(card);
+    console.log("check card1", card);
+  };
   const handleBankSelection2 = (bank2: any) => {
     setSelectedBank2(bank2);
     setSelectedBank3(null); // Khi chọn bank2, ẩn bank3
@@ -340,13 +366,9 @@ query GetInstallmentInfo(
       setBanks2([]);
     }
   };
-  console.log("check data 1", data1);
   const handleBankSelection3 = (bank3: any) => {
     setSelectedBank3(bank3);
     setSelectedBank2(null); // Khi chọn bank3, ẩn bank2
-  };
-  const handleCardSelection = (card: any) => {
-    setSelectedCard(card);
   };
 
   const formatNumber = (value: any) => {
@@ -372,11 +394,11 @@ query GetInstallmentInfo(
   const handleButtonClick = (buttonId: number) => {
     setActiveButton(buttonId);
   };
-  console.log("check bank1", banks);
-  console.log("check bank2" + banks2);
-  console.log("check bank3", banks3);
-  console.log("check select bank2", selectedBank2);
-  console.log("check select bank3", selectedBank3);
+  // console.log("check bank1", banks);
+  // console.log("check bank2" + banks2);
+  // console.log("check bank3", banks3);
+  // console.log("check select bank2", selectedBank2);
+  // console.log("check select bank3", selectedBank3);
 
   return (
     <div style={{ textAlign: "center", backgroundColor: "#fff897" }}>
@@ -490,53 +512,57 @@ query GetInstallmentInfo(
                     borderRadius: 10,
                     color: "white",
                   }}
-                  onClick={handleSearch} // Gọi hàm handleSearch khi nhấn nút
+                  onClick={handleSearch}
                 >
                   Search
                 </button>
               </div>
-              {selectedCard && (
-                <div className="container" style={{ marginTop: 20 }}>
-                  <h2 style={{ padding: 20, fontSize: 20, fontWeight: "bold" }}>
-                    Chọn 1 trong {selectedCard.periods.length} gói tham khảo
-                  </h2>
-                  <Swiper
-                    navigation={true}
-                    modules={[Navigation]}
-                    className="mySwiper"
-                    slidesPerView="auto"
-                    breakpoints={{
-                      640: {
-                        slidesPerView: 1.5,
-                        spaceBetween: 20,
-                      },
-                      768: {
-                        slidesPerView: 2,
-                        spaceBetween: 40,
-                      },
-                      1024: {
-                        slidesPerView: 2.2,
-                        spaceBetween: 50,
-                      },
-                    }}
-                    spaceBetween={12}
-                    style={{ display: "flex" }}
-                  >
-                    {selectedCard?.periods.map((item: any, index: number) => (
-                      <SwiperSlide
-                        key={index}
-                        style={{ display: "flex !important" }}
-                      >
-                        <Card
-                          data={item}
-                          index={index}
-                          priceorigin={variables.total_amount}
-                        />
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
-                </div>
-              )}
+              <Spin spinning={loading} tip="Loading...">
+                {!loading && selectedCard && (
+                  <div className="container" style={{ marginTop: 20 }}>
+                    <h2
+                      style={{ padding: 20, fontSize: 20, fontWeight: "bold" }}
+                    >
+                      Chọn 1 trong {selectedCard.periods.length} gói tham khảo
+                    </h2>
+                    <Swiper
+                      navigation={true}
+                      modules={[Navigation]}
+                      className="mySwiper"
+                      slidesPerView="auto"
+                      breakpoints={{
+                        640: {
+                          slidesPerView: 1.5,
+                          spaceBetween: 20,
+                        },
+                        768: {
+                          slidesPerView: 2,
+                          spaceBetween: 40,
+                        },
+                        1024: {
+                          slidesPerView: 2.2,
+                          spaceBetween: 50,
+                        },
+                      }}
+                      spaceBetween={12}
+                      style={{ display: "flex" }}
+                    >
+                      {selectedCard?.periods.map((item: any, index: number) => (
+                        <SwiperSlide
+                          key={index}
+                          style={{ display: "flex !important" }}
+                        >
+                          <Card
+                            data={item}
+                            index={index}
+                            priceorigin={variables.total_amount}
+                          />
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </div>
+                )}
+              </Spin>
             </div>
           </Spin>
         )}
@@ -620,7 +646,7 @@ query GetInstallmentInfo(
                     borderRadius: 10,
                     color: "white",
                   }}
-                  onClick={handleSearch} // Gọi hàm handleSearch khi nhấn nút
+                  onClick={handleSearch}
                 >
                   Search
                 </button>

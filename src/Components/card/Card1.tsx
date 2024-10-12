@@ -40,7 +40,7 @@ export default function CardProduct(props: Props) {
         </li>
         <li className={styles.redText}>
           <span>Góp mỗi tháng</span>
-          <span>{data.moneyofmonth.toLocaleString("vi-VN")} VNĐ</span>
+          <span>{data?.moneyofmonth.toLocaleString("vi-VN")} VNĐ</span>
         </li>
         <li>
           <span>Chênh lệch trả thẳng</span>
