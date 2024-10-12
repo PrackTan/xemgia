@@ -107,3 +107,15 @@
     animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
 }
+
+.inputMoney {
+  width: 50vw;
+  border-radius: 10px;
+  border: 1px solid gray;
+  padding: 10px;
+}
+@media (max-width: 768px) {
+  .inputMoney {
+    width: 100%;
+  }
+}

@@ -496,15 +496,17 @@ query GetInstallmentInfo(
               <div
                 style={{
                   display: "flex",
+                  flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "center",
                   marginBottom: 20,
                   gap: 10,
                 }}
               >
-                <Input
-                  placeholder="điền số tiền bạn muốn vay"
+                <input
+                  className={styles.inputMoney}
                   value={displayValue}
+                  placeholder="Điền số tiền bạn muốn vay"
                   onChange={handleInputChange}
                 />
                 <button
@@ -516,7 +518,7 @@ query GetInstallmentInfo(
                   }}
                   onClick={handleSearch}
                 >
-                  Search
+                  Tham khảo trả góp
                 </button>
               </div>
               <Spin spinning={loading} tip="Loading...">
@@ -630,15 +632,17 @@ query GetInstallmentInfo(
               <div
                 style={{
                   display: "flex",
+                  flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "center",
                   marginBottom: 20,
                   gap: 10,
                 }}
               >
-                <Input
-                  placeholder="điền số tiền bạn muốn vay"
+                <input
+                  className={styles.inputMoney}
                   value={displayValue}
+                  placeholder="Điền số tiền bạn muốn vay"
                   onChange={handleInputChange}
                 />
                 <button
@@ -650,7 +654,7 @@ query GetInstallmentInfo(
                   }}
                   onClick={handleSearch}
                 >
-                  Search
+                  Tham khảo trả góp
                 </button>
               </div>
               {selectedBank3 === null && banks2 && (
