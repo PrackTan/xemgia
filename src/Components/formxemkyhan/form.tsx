@@ -82,7 +82,9 @@ export default function Home() {
           }}
         >
           <span className={styles.money}>$</span>
-          <span style={{ marginLeft: 2 }}>Công ty tài chính</span>
+          <span style={{ marginLeft: 1, color: "#000", fontWeight: "600" }}>
+            Công ty tài chính
+          </span>
         </div>
       ),
       bank: [
