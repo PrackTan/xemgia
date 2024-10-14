@@ -512,7 +512,7 @@ query GetInstallmentInfo(
                 <button
                   style={{
                     backgroundColor: "#333",
-                    padding: 5,
+                    padding: 15,
                     borderRadius: 10,
                     color: "white",
                   }}

@@ -118,7 +118,6 @@ export default function CardProduct(props: Props) {
             className={styles.termNumber}
             style={{
               backgroundColor: color,
-              padding: "8px 16px",
               borderRadius: "4px",
               color: "#fff",
             }}
@@ -150,7 +149,6 @@ export default function CardProduct(props: Props) {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            padding: "8px 0",
           }}
         >
           <span>Giá trị đơn hàng</span>
@@ -160,7 +158,6 @@ export default function CardProduct(props: Props) {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            padding: "8px 0",
           }}
         >
           <span>Giá trả góp</span>
@@ -171,7 +168,6 @@ export default function CardProduct(props: Props) {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            padding: "8px 0",
             color: "red",
           }}
         >
@@ -182,7 +178,6 @@ export default function CardProduct(props: Props) {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            padding: "8px 0",
           }}
         >
           <span>Chênh lệch trả thẳng</span>
