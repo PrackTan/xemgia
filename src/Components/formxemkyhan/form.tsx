@@ -470,7 +470,7 @@ query GetInstallmentInfo(
               {/* Chỉ hiển thị các lựa chọn thẻ thanh toán nếu đã chọn ngân hàng */}
               {selectedBank && (
                 <div className={styles.paymentOptions}>
-                  <p style={{ color: "#ddd" }}>
+                  <p style={{ color: "#000" }}>
                     Chọn loại thẻ thanh toán cho {selectedBank?.bankName}:
                   </p>
                   <div className={styles.sub}>
