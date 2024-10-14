@@ -25,24 +25,23 @@ export default function BannerHeader() {
         backgroundColor: "#fff897",
       }}
     >
-      <div>
-        <Image
-          className="BuyInInstallments-Section1-bg1"
-          src={banner1}
-          alt=""
-          width={1920}
-          height={1080}
-        />
-        <Image
-          className="BuyInInstallments-Section1-bg2"
-          src={banner2}
-          alt=""
-          width={900}
-          height={506}
-        />
-      </div>
-
       <div className="BuyInInstallments-Section1-Container">
+        <div>
+          <Image
+            className="BuyInInstallments-Section1-bg1"
+            src={banner1}
+            alt=""
+            width={1920}
+            height={1080}
+          />
+          <Image
+            className="BuyInInstallments-Section1-bg2"
+            src={banner2}
+            alt=""
+            width={900}
+            height={506}
+          />
+        </div>
         <Image
           className="BuyInInstallments-S1-ImageBG"
           src={banner2}
