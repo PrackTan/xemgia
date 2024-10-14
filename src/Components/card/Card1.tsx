@@ -122,7 +122,9 @@ export default function CardProduct(props: Props) {
               </span>
             </div>
 
-            <h4>{(priceoriginInt + dataInt).toLocaleString("vi-VN")} VNĐ</h4>
+            <span>
+              {(priceoriginInt + dataInt).toLocaleString("vi-VN")} VNĐ
+            </span>
           </div>
         </div>
       </div>

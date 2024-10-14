@@ -54,3 +54,9 @@
   background-color: #00c853;
   border-color: #00c853;
 }
+/* 
+@media (max-width: 768px) {
+  .details li span {
+    font-size: 20px;
+  }
+} */

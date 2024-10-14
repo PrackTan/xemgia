@@ -470,7 +470,9 @@ query GetInstallmentInfo(
               {/* Chỉ hiển thị các lựa chọn thẻ thanh toán nếu đã chọn ngân hàng */}
               {selectedBank && (
                 <div className={styles.paymentOptions}>
-                  <p>Chọn loại thẻ thanh toán cho {selectedBank?.bankName}:</p>
+                  <p style={{ color: "#ddd" }}>
+                    Chọn loại thẻ thanh toán cho {selectedBank?.bankName}:
+                  </p>
                   <div className={styles.sub}>
                     {selectedBank?.cards?.map((card: any, index: number) => (
                       // Đừng quên trả về phần tử JSX từ hàm map
