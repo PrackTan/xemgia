@@ -648,6 +648,7 @@ query GetInstallmentInfo(
                   className={styles.inputMoney}
                   value={displayValue}
                   placeholder="Điền số tiền bạn muốn vay"
+                  onKeyDown={handleKeyPress} // Lắng nghe sự kiện phím Enter
                   onChange={handleInputChange}
                 />
                 <button
