@@ -36,7 +36,12 @@
   cursor: pointer;
   transition: box-shadow 0.3s ease;
 }
-
+@media (max-width: 768px) {
+  .bankCard {
+    width: 155px;
+    height: 60px;
+  }
+}
 /* .bankCard:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   } */
@@ -109,6 +114,7 @@
 }
 
 .inputMoney {
+  color: #000;
   width: 50vw;
   border-radius: 10px;
   border: 1px solid gray;

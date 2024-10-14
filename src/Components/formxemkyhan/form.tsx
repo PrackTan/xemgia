@@ -541,11 +541,11 @@ query GetInstallmentInfo(
                         },
                         768: {
                           slidesPerView: 2,
-                          spaceBetween: 40,
+                          spaceBetween: 30,
                         },
                         1024: {
                           slidesPerView: 2.2,
-                          spaceBetween: 50,
+                          spaceBetween: 40,
                         },
                       }}
                       spaceBetween={12}
@@ -674,11 +674,11 @@ query GetInstallmentInfo(
                       },
                       768: {
                         slidesPerView: 1,
-                        spaceBetween: 40,
+                        spaceBetween: 30,
                       },
                       1024: {
                         slidesPerView: 2.2,
-                        spaceBetween: 50,
+                        spaceBetween: 40,
                       },
                     }}
                   >
@@ -715,11 +715,11 @@ query GetInstallmentInfo(
                       },
                       768: {
                         slidesPerView: 2,
-                        spaceBetween: 40,
+                        spaceBetween: 30,
                       },
                       1024: {
                         slidesPerView: 2.2,
-                        spaceBetween: 50,
+                        spaceBetween: 40,
                       },
                     }}
                   >
