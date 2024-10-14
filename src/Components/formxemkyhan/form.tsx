@@ -346,7 +346,11 @@ query GetInstallmentInfo(
       alert("Vui lòng điền số tiền muốn vay");
     }
   };
-
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
   // Handle selecting a bank
   const handleBankSelection = (bank: any) => {
     setSelectedBank(bank);
@@ -508,6 +512,7 @@ query GetInstallmentInfo(
                   value={displayValue}
                   placeholder="Điền số tiền bạn muốn vay"
                   onChange={handleInputChange}
+                  onKeyDown={handleKeyPress} // Lắng nghe sự kiện phím Enter
                 />
                 <button
                   style={{
