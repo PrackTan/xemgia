@@ -2,9 +2,18 @@
 import Image from "next/image";
 import React from "react";
 import "../../Styles/styleheaderbanner.css";
-import banner1 from "../../../public/Images/1200x450__si_u_u_i_tr_g_p.png";
-import banner2 from "../../../public/Images/1200x450_tr_g_p_qua_HD_Saison_Mcredit_Home_credit_Shinhang.png";
-import banner3 from "../../../public/Images/BOX-TRAGOP-5-150624 (1).png";
+import banner1 from "../../../public/Images/Gioi_thieu_BLM_1200x450_0810-3.jpg";
+import banner2 from "../../../public/Images/BOX-TRAGOP-8-150624.png";
+import banner3 from "../../../public/Images/tragop.png";
+import banner4 from "../../../public/Images/BOX-TRAGOP-2-150624.png";
+import banner5 from "../../../public/Images/Homepaylt.png";
+import banner6 from "../../../public/Images/Banner_Kredivo_UuDaiTraGop_120010324.png";
+import banner7 from "../../../public/Images/BOX-TRAGOP-3-150624.png";
+import banner8 from "../../../public/Images/BOX-TRAGOP-4-150624.png";
+import banner9 from "../../../public/Images/BOX-TRAGOP-5-150624 (1).png";
+import banner10 from "../../../public/Images/1200x450__si_u_u_i_tr_g_p.png";
+import banner11 from "../../../public/Images/1200x450_tr_g_p_qua_HD_Saison_Mcredit_Home_credit_Shinhang.png";
+
 import Link from "next/link";
 export default function BannerHeader() {
   return (
@@ -19,14 +28,14 @@ export default function BannerHeader() {
       <div>
         <Image
           className="BuyInInstallments-Section1-bg1"
-          src="https://bachlongmobile.com/bnews/wp-content/uploads/2024/08/HEAD-TRAGOP-2024-1920-030824.png"
+          src={banner1}
           alt=""
           width={1920}
           height={1080}
         />
         <Image
           className="BuyInInstallments-Section1-bg2"
-          src="https://bachlongmobile.com/bnews/wp-content/uploads/2024/08/HEAD-TRAGOP-2024-900-030824.png"
+          src={banner2}
           alt=""
           width={900}
           height={506}
@@ -36,13 +45,13 @@ export default function BannerHeader() {
       <div className="BuyInInstallments-Section1-Container">
         <Image
           className="BuyInInstallments-S1-ImageBG"
-          src="https://bachlongmobile.com/bnews/wp-content/uploads/2024/06/BOX-TRAGOP-8-150624.png"
+          src={banner2}
           alt=""
           width={1200}
           height={675}
         />
         <Image
-          src="https://bachlongmobile.com/bnews/wp-content/uploads/2024/06/BOX-TRAGOP-1-150624.png"
+          src={banner3}
           alt=""
           className="BuyInInstallments-S1-ImageBG"
           width={1200}
@@ -63,14 +72,14 @@ export default function BannerHeader() {
               }}
             >
               <Image
-                src="https://bachlongmobile.com/bnews/wp-content/uploads/2024/06/BOX-TRAGOP-2-150624.png"
+                src={banner4}
                 alt=""
                 width={1000}
                 height={1000}
                 className="bannerline1"
               />
               <Image
-                src="https://bachlongmobile.com/bnews/wp-content/uploads/2024/03/Banner_Kredivo_UuDaiTraGop_120010324.png"
+                src={banner6}
                 alt=""
                 width={1000}
                 height={1000}
@@ -92,14 +101,14 @@ export default function BannerHeader() {
               }}
             >
               <Image
-                src="https://bachlongmobile.com/bnews/wp-content/uploads/2024/06/BOX-TRAGOP-3-150624.png"
+                src={banner5}
                 className="bannerline2"
                 alt=""
                 width={1000}
                 height={1000}
               />
               <Image
-                src="https://bachlongmobile.com/bnews/wp-content/uploads/2024/06/BANNER-HOME-PAYLATER-1200-060624.png"
+                src={banner7}
                 alt=""
                 width={1000}
                 height={1000}
@@ -110,34 +119,32 @@ export default function BannerHeader() {
         </div>
 
         <Image
-          src="https://bachlongmobile.com/bnews/wp-content/uploads/2024/06/BOX-TRAGOP-4-150624.png"
+          src={banner8}
           alt=""
           className="BuyInInstallments-S1-ImageBG"
           width={1200}
           height={675}
         />
         <Image
-          src={banner3}
+          src={banner9}
           alt=""
           className="BuyInInstallments-S1-ImageBG"
           width={1200}
           height={675}
         />
         <div className="doublebanner">
-          <Image
-            src={banner1}
-            alt=""
+          <Link
             className="BuyInInstallments-S1-Image"
-            width={1200}
-            height={675}
-          />
-          <Image
-            src={banner2}
-            alt=""
+            href={`https://bachlongmobile.com/news/news/sieu-uu-dai-tra-gop-apple/`}
+          >
+            <Image src={banner10} alt="" width={1200} height={675} />
+          </Link>
+          <Link
             className="BuyInInstallments-S1-Image"
-            width={1200}
-            height={675}
-          />
+            href={`https://bachlongmobile.com/promotion/tra-gop-tai-chinh/`}
+          >
+            <Image src={banner11} alt="" width={1200} height={675} />
+          </Link>
         </div>
       </div>
     </div>
