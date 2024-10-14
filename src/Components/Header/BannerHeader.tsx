@@ -36,7 +36,7 @@ export default function BannerHeader() {
           />
           <Image
             className="BuyInInstallments-Section1-bg2"
-            src={banner2}
+            src={banner1}
             alt=""
             width={900}
             height={506}
