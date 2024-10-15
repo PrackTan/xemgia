@@ -57,7 +57,6 @@ export default function Home() {
   const [value, setValue] = useState("20000000");
   const [displayValue, setDisplayValue] = useState(""); // Giá trị hiển thị (có dấu chấm)
   const [triggerSearch, setTriggerSearch] = useState(true); // Trạng thái để gọi API
-  const [triggerSearch2, setTriggerSearch2] = useState(false); // Trạng thái để gọi API
   const [loading, setLoading] = useState(false);
 
   const data = [
@@ -201,32 +200,29 @@ query GetInstallmentInfo(
               }),
             }
           );
-
           const responseData = await response.json();
           console.log("check respons1 ", responseData);
-          setLoading(false);
           if (
             responseData.data &&
             responseData.data.getInstallmentInfoByCredit
           ) {
             const bankData = responseData.data.getInstallmentInfoByCredit;
             setBanks(bankData);
-            // console.log(">>>>>>>>>>>>>>> check bank1 data ", banks);
-            // setSelectedCard(bankData.cards);
-            // console.log("check selected card>>>>>>>>", selectedCard);
-            // selectedCard()
+            if (!selectedCard) {
+              setLoading(true);
+            }
           }
         } catch (error) {
           console.error("Error fetching bank data:", error);
+        } finally {
           setLoading(false);
         }
-        // setTriggerSearch(false);
       }
     };
 
     fetchBanks();
-    // }, [triggerSearch, selectedBank, selectedCard, variables]); // Gọi lại API khi `triggerSearch` thay đổi
-  }, [triggerSearch, variable2]); // Gọi lại API khi `triggerSearch` thay đổi
+  }, [triggerSearch, variable2]);
+
   useEffect(() => {
     const fetchBanks2 = async () => {
       if (triggerSearch) {
@@ -247,21 +243,23 @@ query GetInstallmentInfo(
           );
 
           const responseData = await response.json();
-          console.log(">>>>>>>>>>>>>BANK 2 ");
-          setLoading(false);
           if (responseData.data && responseData.data) {
             const bankData = responseData.data.getInstallmentInfo;
             setBanks2(bankData);
+            console.log(">>>>>>>>>>>>>BANK 2 ", banks2);
           }
         } catch (error) {
+          console.error("Error fetching bank data:", error);
+        } finally {
           setLoading(false);
         }
-        setTriggerSearch(false); // Reset lại triggerSearch2 sau khi gọi API
+        setTriggerSearch(false);
       }
     };
 
     fetchBanks2();
-  }, [variable2, selectedBank2, triggerSearch]); // Gọi lại API khi triggerSearch2 thay đổi
+  }, [variable2, selectedBank2, triggerSearch]);
+
   useEffect(() => {
     const fetchBank3 = async () => {
       if (triggerSearch) {
@@ -281,16 +279,17 @@ query GetInstallmentInfo(
           const responseData = await response.json();
           const bankData = responseData;
           setBanks3(bankData);
-          setLoading(false);
         } catch (error) {
           console.error("Error fetching bank data:", error);
+        } finally {
           setLoading(false);
         }
-        setTriggerSearch(false); // Reset lại triggerSearch2 sau khi gọi API
+        setTriggerSearch(false);
       }
     };
     fetchBank3();
   }, [triggerSearch, selectedBank3?.endpoint, selectedBank3?.price]);
+
   console.log("check selectcard?????????????????????", selectedCard);
   const handleSearch = async () => {
     if (value) {
@@ -346,6 +345,7 @@ query GetInstallmentInfo(
       alert("Vui lòng điền số tiền muốn vay");
     }
   };
+
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       handleSearch();
@@ -355,6 +355,7 @@ query GetInstallmentInfo(
   const handleBankSelection = (bank: any) => {
     setSelectedBank(bank);
     setSelectedCard(null); // Reset card selection when a new bank is selected
+    // setTriggerSearch(true);
   };
   const handleCardSelection = (card: any) => {
     setSelectedCard(card);
@@ -374,7 +375,6 @@ query GetInstallmentInfo(
   };
   const handleBankSelection3 = (bank3: any) => {
     setSelectedBank3(bank3);
-    setSelectedBank2(null); // Khi chọn bank3, ẩn bank2
   };
 
   const formatNumber = (value: any) => {
@@ -399,6 +399,11 @@ query GetInstallmentInfo(
   const [activeButton, setActiveButton] = useState<number>(1);
   const handleButtonClick = (buttonId: number) => {
     setActiveButton(buttonId);
+    if (buttonId === 2) {
+      setShowFinancialCompanies(false);
+      setSelectedBank2(null);
+      setSelectedBank3(null);
+    }
   };
   // console.log("check bank1", banks);
   // console.log("check bank2" + banks2);
@@ -528,57 +533,57 @@ query GetInstallmentInfo(
                   Tham khảo trả góp
                 </button>
               </div>
-              <Spin spinning={loading} tip="Loading...">
-                {!loading && selectedCard && (
-                  <div className="container" style={{ marginTop: 20 }}>
-                    <h2
-                      style={{
-                        padding: 20,
-                        fontSize: 20,
-                        fontWeight: "bold",
-                        color: "#000",
-                      }}
-                    >
-                      Chọn 1 trong {selectedCard.periods.length} gói tham khảo
-                    </h2>
-                    <Swiper
-                      navigation={true}
-                      modules={[Navigation]}
-                      className="mySwiper"
-                      slidesPerView="auto"
-                      breakpoints={{
-                        640: {
-                          slidesPerView: 1.5,
-                          spaceBetween: 15,
-                        },
-                        768: {
-                          slidesPerView: 2,
-                          spaceBetween: 15,
-                        },
-                        1024: {
-                          slidesPerView: 2.2,
-                          spaceBetween: 15,
-                        },
-                      }}
-                      spaceBetween={12}
-                      style={{ display: "flex" }}
-                    >
-                      {selectedCard?.periods.map((item: any, index: number) => (
-                        <SwiperSlide
-                          key={index}
-                          style={{ display: "flex !important" }}
-                        >
-                          <Card
-                            data={item}
-                            index={index}
-                            priceorigin={variables.total_amount}
-                          />
-                        </SwiperSlide>
-                      ))}
-                    </Swiper>
-                  </div>
-                )}
-              </Spin>
+              {/* <Spin spinning={loading} tip="Loading..."> */}
+              {!loading && selectedCard && (
+                <div className="container" style={{ marginTop: 20 }}>
+                  <h2
+                    style={{
+                      padding: 20,
+                      fontSize: 20,
+                      fontWeight: "bold",
+                      color: "#000",
+                    }}
+                  >
+                    Chọn 1 trong {selectedCard.periods.length} gói tham khảo
+                  </h2>
+                  <Swiper
+                    navigation={true}
+                    modules={[Navigation]}
+                    className="mySwiper"
+                    slidesPerView="auto"
+                    breakpoints={{
+                      640: {
+                        slidesPerView: 1.5,
+                        spaceBetween: 15,
+                      },
+                      768: {
+                        slidesPerView: 2,
+                        spaceBetween: 15,
+                      },
+                      1024: {
+                        slidesPerView: 2.2,
+                        spaceBetween: 15,
+                      },
+                    }}
+                    spaceBetween={12}
+                    style={{ display: "flex" }}
+                  >
+                    {selectedCard?.periods.map((item: any, index: number) => (
+                      <SwiperSlide
+                        key={index}
+                        style={{ display: "flex !important" }}
+                      >
+                        <Card
+                          data={item}
+                          index={index}
+                          priceorigin={variables.total_amount}
+                        />
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </div>
+              )}
+              {/* </Spin> */}
             </div>
           </Spin>
         )}
@@ -718,7 +723,7 @@ query GetInstallmentInfo(
                 </div>
               )}
 
-              {selectedBank2 === null && banks3 && banks3.item && (
+              {banks3 && banks3.item && (
                 <div style={{ marginTop: 20 }}>
                   <h2
                     style={{

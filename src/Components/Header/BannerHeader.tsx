@@ -8,11 +8,11 @@ import banner3 from "../../../public/Images/tragop.png";
 import banner4 from "../../../public/Images/BOX-TRAGOP-2-150624.png";
 import banner5 from "../../../public/Images/Homepaylt.png";
 import banner6 from "../../../public/Images/Banner_Kredivo_UuDaiTraGop_120010324.png";
-import banner7 from "../../../public/Images/BOX-TRAGOP-3-150624.png";
+import banner7 from "../../../public/Images/banner7.png";
 import banner8 from "../../../public/Images/BOX-TRAGOP-4-150624.png";
 import banner9 from "../../../public/Images/BOX-TRAGOP-5-150624 (1).png";
 import banner10 from "../../../public/Images/1200x450__si_u_u_i_tr_g_p.png";
-import banner11 from "../../../public/Images/1200x450_tr_g_p_qua_HD_Saison_Mcredit_Home_credit_Shinhang.png";
+import banner11 from "../../../public/Images/banner11.png";
 
 import Link from "next/link";
 export default function BannerHeader() {
@@ -57,9 +57,7 @@ export default function BannerHeader() {
           height={675}
         />
         <div className="wrapper-banner2">
-          <Link
-            href={`https://bachlongmobile.com/promotion/tra-gop-kredivo/?srsltid=AfmBOormslnmH-G8wAeqP4yoIdCtbe1jjqeU_2_wO-pN6uI_BIs4BiCN`}
-          >
+          <Link href={`https://bachlongmobile.com/promotion/tra-gop-kredivo`}>
             <div
               style={{
                 display: "flex",
@@ -86,9 +84,7 @@ export default function BannerHeader() {
               />
             </div>
           </Link>
-          <Link
-            href={`https://bachlongmobile.com/promotion/home-pay-later/?srsltid=AfmBOoqlL5wWW3UHwV5qp-bECosl7I3Qxvmm6_-W4e_qRgE2K5JF8J6E`}
-          >
+          <Link href={`https://bachlongmobile.com/promotion/home-pay-later`}>
             <div
               style={{
                 display: "flex",
