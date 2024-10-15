@@ -54,44 +54,6 @@ export default function CardProduct(props: Props) {
   const color = colors[index % colors.length];
 
   return (
-    // <Card className={styles.card}>
-    //   <div style={{ background: termGradient }}>
-    //     <div className={styles.header}>
-    //       <span
-    //         className={styles.termNumber}
-    //         style={{ backgroundColor: color }}
-    //       >
-    //         {index + 1}
-    //       </span>
-    //       <span>Kỳ hạn {data?.duration} tháng</span>
-    //     </div>
-    //   </div>
-    //   <div className={styles.totalPayment}>
-    //     <h3>Tổng tiền trả góp</h3>
-    //     <h4>{data.order_loan_amount.toLocaleString("vi-VN")} VNĐ</h4>
-    //   </div>
-    //   <ul className={styles.details}>
-    //     <li>
-    //       <span>Giá trị đơn hàng</span>
-    //       <span>{priceorigin.toLocaleString("vi-VN")} VNĐ</span>
-    //     </li>
-    //     <li>
-    //       <span>Giá trả góp</span>
-    //       <span>{data.order_total_amount.toLocaleString("vi-VN")} VNĐ</span>
-    //     </li>
-    //     <li className={styles.redText}>
-    //       <span>Góp mỗi tháng</span>
-    //       <span>{data.monthly_installment.toLocaleString("vi-VN")} VNĐ</span>
-    //     </li>
-    //     <li>
-    //       <span>Chênh lệch trả thẳng</span>
-    //       <span>{data.order_diffrence_amount.toLocaleString("vi-VN")} VNĐ</span>
-    //     </li>
-    //   </ul>
-    //   {/* <Button type='primary' className={styles.button}>
-    //     Chọn
-    //   </Button> */}
-    // </Card>
     <div
       className={styles.card}
       style={{

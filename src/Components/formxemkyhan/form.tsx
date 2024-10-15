@@ -532,7 +532,12 @@ query GetInstallmentInfo(
                 {!loading && selectedCard && (
                   <div className="container" style={{ marginTop: 20 }}>
                     <h2
-                      style={{ padding: 20, fontSize: 20, fontWeight: "bold" }}
+                      style={{
+                        padding: 20,
+                        fontSize: 20,
+                        fontWeight: "bold",
+                        color: "#000",
+                      }}
                     >
                       Chọn 1 trong {selectedCard.periods.length} gói tham khảo
                     </h2>
@@ -581,7 +586,7 @@ query GetInstallmentInfo(
         {activeButton === 2 && (
           <Spin spinning={loading} tip="Loading...">
             <div>
-              <span>Chọn loại thẻ thanh toán:</span>
+              <span style={{ color: "#000" }}>Chọn loại thẻ thanh toán:</span>
               <div className={styles.grid}>
                 {data?.map((bank2: any, index: any) => (
                   <div
@@ -667,7 +672,14 @@ query GetInstallmentInfo(
               </div>
               {selectedBank3 === null && banks2 && (
                 <div style={{ marginTop: 20 }}>
-                  <h2 style={{ padding: 20, fontSize: 20, fontWeight: "bold" }}>
+                  <h2
+                    style={{
+                      padding: 20,
+                      fontSize: 20,
+                      fontWeight: "bold",
+                      color: "#000",
+                    }}
+                  >
                     Chọn 1 trong {banks2?.length} gói tham khảo
                   </h2>
                   <Swiper
@@ -708,7 +720,14 @@ query GetInstallmentInfo(
 
               {selectedBank2 === null && banks3 && banks3.item && (
                 <div style={{ marginTop: 20 }}>
-                  <h2 style={{ padding: 20, fontSize: 20, fontWeight: "bold" }}>
+                  <h2
+                    style={{
+                      padding: 20,
+                      fontSize: 20,
+                      fontWeight: "bold",
+                      color: "#000",
+                    }}
+                  >
                     Chọn 1 trong {banks3.item.length} gói tham khảo
                   </h2>
                   <Swiper
