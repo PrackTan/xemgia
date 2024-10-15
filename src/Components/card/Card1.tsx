@@ -103,7 +103,6 @@ export default function CardProduct(props: Props) {
             className={styles.termNumber}
             style={{
               backgroundColor: color,
-              padding: "8px 16px",
               borderRadius: "4px",
               color: "#fff",
             }}
@@ -117,8 +116,10 @@ export default function CardProduct(props: Props) {
           >
             <div style={{ display: "flex", gap: "40px" }}>
               <span style={{ fontWeight: 300 }}>Tổng tiền trả góp</span>
-              <span style={{ fontWeight: 300 }}>
-                Kỳ hạn {data?.month} tháng
+              <span
+                style={{ fontWeight: 300, fontSize: 20, whiteSpace: "nowrap" }}
+              >
+                Kỳ hạn {data?.month}
               </span>
             </div>
 
@@ -137,7 +138,6 @@ export default function CardProduct(props: Props) {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            padding: "8px 0",
           }}
         >
           <span>Giá trị đơn hàng</span>
@@ -147,7 +147,6 @@ export default function CardProduct(props: Props) {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            padding: "8px 0",
           }}
         >
           <span>Giá trả góp</span>
@@ -158,7 +157,6 @@ export default function CardProduct(props: Props) {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            padding: "8px 0",
             color: "red",
           }}
         >
@@ -169,11 +167,10 @@ export default function CardProduct(props: Props) {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            padding: "8px 0",
           }}
         >
           <span>Chênh lệch trả thẳng</span>
-          <span>{data.interest.toLocaleString("vi-VN")} VNĐ</span>
+          <span>{data?.interest.toLocaleString("vi-VN")} VNĐ</span>
         </li>
       </ul>
       {/* Uncomment the button if you need it */}

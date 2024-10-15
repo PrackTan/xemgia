@@ -656,7 +656,7 @@ query GetInstallmentInfo(
                 <button
                   style={{
                     backgroundColor: "#333",
-                    padding: 5,
+                    padding: 15,
                     borderRadius: 10,
                     color: "white",
                   }}
@@ -719,15 +719,15 @@ query GetInstallmentInfo(
                     breakpoints={{
                       640: {
                         slidesPerView: 1.5,
-                        spaceBetween: 20,
+                        spaceBetween: 15,
                       },
                       768: {
                         slidesPerView: 2,
-                        spaceBetween: 30,
+                        spaceBetween: 15,
                       },
                       1024: {
                         slidesPerView: 2.2,
-                        spaceBetween: 40,
+                        spaceBetween: 15,
                       },
                     }}
                   >
