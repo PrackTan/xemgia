@@ -7,11 +7,11 @@ import banner2 from "../../../public/Images/BOX-TRAGOP-8-150624.png";
 import banner3 from "../../../public/Images/tragop.png";
 import banner4 from "../../../public/Images/BOX-TRAGOP-2-150624.png";
 import banner5 from "../../../public/Images/Homepaylt.png";
-import banner6 from "../../../public/Images/Banner_Kredivo_UuDaiTraGop_120010324.png";
+import banner6 from "../../../public/Images/kredivo.png";
 import banner7 from "../../../public/Images/banner7.png";
 import banner8 from "../../../public/Images/BOX-TRAGOP-4-150624.png";
 import banner9 from "../../../public/Images/BOX-TRAGOP-5-150624 (1).png";
-import banner10 from "../../../public/Images/1200x450__si_u_u_i_tr_g_p.png";
+import banner10 from "../../../public/Images/040924-BANNER-TRA-GOP-3-KHONG-1200.png";
 import banner11 from "../../../public/Images/banner11.png";
 
 import Link from "next/link";

@@ -832,6 +832,7 @@ query GetInstallmentInfo(
             </div>
           </Spin>
         )}
+        <Tour open={open} onClose={() => setOpen(false)} steps={steps} />
       </div>
     </div>
   );
