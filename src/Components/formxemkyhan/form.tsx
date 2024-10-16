@@ -1,9 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "../../Styles/Home.module.css";
 import Image from "next/image";
 import { Input, Spin } from "antd";
 import Card from "../card/Card";
+import { EllipsisOutlined } from "@ant-design/icons";
+import { Button, Divider, Space, Tour } from "antd";
+import type { TourProps } from "antd";
 import Card1 from "../card/Card1";
 import { Swiper, SwiperSlide } from "swiper/react"; // Import Swiper components
 import "swiper/swiper-bundle.css"; // Import Swiper styles
@@ -45,6 +48,11 @@ interface Bank1 {
   price: number; // Định nghĩa chính xác kiểu dữ liệu cho cards
 }
 export default function Home() {
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const [openIntro, setOpenIntro] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
   const [banks, setBanks] = useState<Bank[]>([]);
   const [banks2, setBanks2] = useState<Bank[]>([]);
   const [banks3, setBanks3] = useState<any>(null);
@@ -410,12 +418,37 @@ query GetInstallmentInfo(
   // console.log("check bank3", banks3);
   // console.log("check select bank2", selectedBank2);
   // console.log("check select bank3", selectedBank3);
-
+  const steps: TourProps["steps"] = [
+    {
+      title: "Upload File",
+      description: "Put your files here.",
+      cover: (
+        <img
+          alt="tour.png"
+          src="https://user-images.githubusercontent.com/5378891/197385811-55df8480-7ff4-44bd-9d43-a7dade598d70.png"
+        />
+      ),
+      target: () => ref1.current,
+    },
+    {
+      title: "Save",
+      description: "Save your changes.",
+      target: () => ref2.current,
+    },
+    {
+      title: "Other Actions",
+      description: "Click to see other actions.",
+      target: () => ref3.current,
+    },
+  ];
   return (
     <div style={{ textAlign: "center", backgroundColor: "#fff897" }}>
       <h1 className={styles.title}> BẢNG TRẢ GÓP THAM KHẢO</h1>
 
       <div className={styles.container}>
+        <Button type="primary" onClick={() => setOpen(true)}>
+          Hướng dẫn sử dụng
+        </Button>
         <div className={`${"tabs_wrapper"}`}>
           <button
             className={`${"tab_item"} ${"button"}`}
@@ -587,6 +620,7 @@ query GetInstallmentInfo(
             </div>
           </Spin>
         )}
+        <Tour open={open} onClose={() => setOpen(false)} steps={steps} />
 
         {activeButton === 2 && (
           <Spin spinning={loading} tip="Loading...">
