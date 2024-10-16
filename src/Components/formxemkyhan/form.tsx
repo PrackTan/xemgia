@@ -51,6 +51,8 @@ export default function Home() {
   const ref1 = useRef(null);
   const ref2 = useRef(null);
   const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  const ref5 = useRef(null);
   const [openIntro, setOpenIntro] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [banks, setBanks] = useState<Bank[]>([]);
@@ -219,6 +221,13 @@ query GetInstallmentInfo(
             if (!selectedCard) {
               setLoading(true);
             }
+            // Set default bank and card
+            if (bankData.length > 0) {
+              setSelectedBank(bankData[2]); // Set the first bank as default
+              // if (bankData[0].cards.length > 0) {
+              //   setSelectedCard(bankData[0].cards[0]); // Set the first card as default
+              // }
+            }
           }
         } catch (error) {
           console.error("Error fetching bank data:", error);
@@ -230,7 +239,7 @@ query GetInstallmentInfo(
 
     fetchBanks();
   }, [triggerSearch, variable2]);
-
+  console.log("check data bankkkkkk", banks);
   useEffect(() => {
     const fetchBanks2 = async () => {
       if (triggerSearch) {
@@ -420,25 +429,39 @@ query GetInstallmentInfo(
   // console.log("check select bank3", selectedBank3);
   const steps: TourProps["steps"] = [
     {
-      title: "Upload File",
-      description: "Put your files here.",
-      cover: (
-        <img
-          alt="tour.png"
-          src="https://user-images.githubusercontent.com/5378891/197385811-55df8480-7ff4-44bd-9d43-a7dade598d70.png"
-        />
-      ),
+      title: "Bước 1",
+      description: "Chọn loại bạn muốn trả góp.",
       target: () => ref1.current,
+      nextButtonProps: { children: "Tiếp theo" },
     },
     {
-      title: "Save",
-      description: "Save your changes.",
+      title: "Bước 2",
+      description: "Chọn ngân hàng bạn muốn.",
       target: () => ref2.current,
+      prevButtonProps: { children: "Quay lại" },
+      nextButtonProps: { children: "Tiếp theo" },
     },
     {
-      title: "Other Actions",
-      description: "Click to see other actions.",
+      title: "Bước 3",
+      description: "Chọn loại thẻ bạn muốn.",
       target: () => ref3.current,
+      prevButtonProps: { children: "Quay lại" },
+
+      nextButtonProps: { children: "Tiếp theo" },
+    },
+    {
+      title: "Bước 4",
+      description: "Nhấp số tiền bạn muốn vay",
+      target: () => ref4.current,
+      prevButtonProps: { children: "Quay lại" },
+      nextButtonProps: { children: "Tiếp theo" },
+    },
+    {
+      title: "Bước 5",
+      description: "Nhấn nút này để tham khảo.",
+      target: () => ref5.current,
+      prevButtonProps: { children: "Quay lại" },
+      nextButtonProps: { children: "Hoàn thành" },
     },
   ];
   return (
@@ -446,10 +469,10 @@ query GetInstallmentInfo(
       <h1 className={styles.title}> BẢNG TRẢ GÓP THAM KHẢO</h1>
 
       <div className={styles.container}>
-        <Button type="primary" onClick={() => setOpen(true)}>
+        <button className={styles.btn_huongdan} onClick={() => setOpen(true)}>
           Hướng dẫn sử dụng
-        </Button>
-        <div className={`${"tabs_wrapper"}`}>
+        </button>
+        <div className={`${"tabs_wrapper"}`} ref={ref1}>
           <button
             className={`${"tab_item"} ${"button"}`}
             onClick={() => handleButtonClick(1)}
@@ -482,7 +505,7 @@ query GetInstallmentInfo(
         {activeButton === 1 && (
           <Spin spinning={loading} tip="Loading...">
             <div>
-              <div className={styles.grid}>
+              <div className={styles.grid} ref={ref2}>
                 {banks?.map((bank: any, index: any) => (
                   <div
                     key={index}
@@ -507,7 +530,7 @@ query GetInstallmentInfo(
 
               {/* Chỉ hiển thị các lựa chọn thẻ thanh toán nếu đã chọn ngân hàng */}
               {selectedBank && (
-                <div className={styles.paymentOptions}>
+                <div className={styles.paymentOptions} ref={ref3}>
                   <p style={{ color: "#000" }}>
                     Chọn loại thẻ thanh toán cho {selectedBank?.bankName}:
                   </p>
@@ -548,6 +571,7 @@ query GetInstallmentInfo(
                 }}
               >
                 <input
+                  ref={ref4}
                   className={styles.inputMoney}
                   value={displayValue}
                   placeholder="Điền số tiền bạn muốn vay"
@@ -555,6 +579,7 @@ query GetInstallmentInfo(
                   onKeyDown={handleKeyPress} // Lắng nghe sự kiện phím Enter
                 />
                 <button
+                  ref={ref5}
                   style={{
                     backgroundColor: "#333",
                     padding: 15,
