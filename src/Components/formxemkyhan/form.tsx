@@ -427,43 +427,74 @@ query GetInstallmentInfo(
   // console.log("check bank3", banks3);
   // console.log("check select bank2", selectedBank2);
   // console.log("check select bank3", selectedBank3);
-  const steps: TourProps["steps"] = [
-    {
-      title: "Bước 1",
-      description: "Chọn loại bạn muốn trả góp.",
-      target: () => ref1.current,
-      nextButtonProps: { children: "Tiếp theo" },
-    },
-    {
-      title: "Bước 2",
-      description: "Chọn ngân hàng bạn muốn.",
-      target: () => ref2.current,
-      prevButtonProps: { children: "Quay lại" },
-      nextButtonProps: { children: "Tiếp theo" },
-    },
-    {
-      title: "Bước 3",
-      description: "Chọn loại thẻ bạn muốn.",
-      target: () => ref3.current,
-      prevButtonProps: { children: "Quay lại" },
+  const steps: TourProps["steps"] =
+    activeButton === 1
+      ? [
+          {
+            title: "Bước 1",
+            description: "Chọn loại bạn muốn trả góp.",
+            target: () => ref1.current,
+            nextButtonProps: { children: "Tiếp theo" },
+          },
+          {
+            title: "Bước 2",
+            description: "Chọn ngân hàng bạn muốn.",
+            target: () => ref2.current,
+            prevButtonProps: { children: "Quay lại" },
+            nextButtonProps: { children: "Tiếp theo" },
+          },
+          {
+            title: "Bước 3",
+            description: "Chọn loại thẻ bạn muốn.",
+            target: () => ref3.current,
+            prevButtonProps: { children: "Quay lại" },
 
-      nextButtonProps: { children: "Tiếp theo" },
-    },
-    {
-      title: "Bước 4",
-      description: "Nhấp số tiền bạn muốn vay",
-      target: () => ref4.current,
-      prevButtonProps: { children: "Quay lại" },
-      nextButtonProps: { children: "Tiếp theo" },
-    },
-    {
-      title: "Bước 5",
-      description: "Nhấn nút này để tham khảo.",
-      target: () => ref5.current,
-      prevButtonProps: { children: "Quay lại" },
-      nextButtonProps: { children: "Hoàn thành" },
-    },
-  ];
+            nextButtonProps: { children: "Tiếp theo" },
+          },
+          {
+            title: "Bước 4",
+            description: "Nhấp số tiền bạn muốn vay",
+            target: () => ref4.current,
+            prevButtonProps: { children: "Quay lại" },
+            nextButtonProps: { children: "Tiếp theo" },
+          },
+          {
+            title: "Bước 5",
+            description: "Nhấn nút này để tham khảo.",
+            target: () => ref5.current,
+            prevButtonProps: { children: "Quay lại" },
+            nextButtonProps: { children: "Hoàn thành" },
+          },
+        ]
+      : [
+          {
+            title: "Bước 1",
+            description: "Chọn loại bạn muốn trả góp.",
+            target: () => ref1.current,
+            nextButtonProps: { children: "Tiếp theo" },
+          },
+          {
+            title: "Bước 2",
+            description: "Chọn ngân hàng bạn muốn.",
+            target: () => ref2.current,
+            prevButtonProps: { children: "Quay lại" },
+            nextButtonProps: { children: "Tiếp theo" },
+          },
+          {
+            title: "Bước 3",
+            description: "Nhấp số tiền bạn muốn vay",
+            target: () => ref3.current,
+            prevButtonProps: { children: "Quay lại" },
+            nextButtonProps: { children: "Tiếp theo" },
+          },
+          {
+            title: "Bước 4",
+            description: "Nhấn nút này để tham khảo.",
+            target: () => ref4.current,
+            prevButtonProps: { children: "Quay lại" },
+            nextButtonProps: { children: "Hoàn thành" },
+          },
+        ];
   return (
     <div style={{ textAlign: "center", backgroundColor: "#fff897" }}>
       <h1 className={styles.title}> BẢNG TRẢ GÓP THAM KHẢO</h1>
@@ -650,61 +681,64 @@ query GetInstallmentInfo(
         {activeButton === 2 && (
           <Spin spinning={loading} tip="Loading...">
             <div>
-              <span style={{ color: "#000" }}>Chọn loại thẻ thanh toán:</span>
-              <div className={styles.grid}>
-                {data?.map((bank2: any, index: any) => (
-                  <div
-                    key={index}
-                    className={`${styles.bankCard} ${
-                      selectedBank2 && selectedBank2.bankCode === bank2.bankCode
-                        ? styles.selectedBox
-                        : ""
-                    }`}
-                    onClick={() => handleBankSelection2(bank2)}
-                  >
-                    {bank2.bankLogo ? (
-                      <Image
-                        src={bank2?.bankLogo}
-                        alt={bank2.bankName}
-                        className={styles.bankLogo}
-                        height={200}
-                        width={200}
-                      />
-                    ) : (
-                      bank2.bankLogo1
-                    )}
-
-                    {/* <p>{bank.bankName}</p> */}
-                  </div>
-                ))}
-              </div>
-              {showFinancialCompanies && (
-                <>
-                  <span>Chọn công ty tài chính:</span>
-                  <div className={styles.grid}>
-                    {data1.map((bank3: any, index: any) => (
-                      <div
-                        key={index}
-                        className={`${styles.bankCard} ${
-                          selectedBank3 &&
-                          selectedBank3.bankCode === bank3.bankCode
-                            ? styles.selectedBox
-                            : ""
-                        }`}
-                        onClick={() => handleBankSelection3(bank3)}
-                      >
+              <div ref={ref2}>
+                <span style={{ color: "#000" }}>Chọn loại thẻ thanh toán:</span>
+                <div className={styles.grid}>
+                  {data?.map((bank2: any, index: any) => (
+                    <div
+                      key={index}
+                      className={`${styles.bankCard} ${
+                        selectedBank2 &&
+                        selectedBank2.bankCode === bank2.bankCode
+                          ? styles.selectedBox
+                          : ""
+                      }`}
+                      onClick={() => handleBankSelection2(bank2)}
+                    >
+                      {bank2.bankLogo ? (
                         <Image
-                          src={bank3.bankLogo}
-                          alt={bank3.bankName}
+                          src={bank2?.bankLogo}
+                          alt={bank2.bankName}
                           className={styles.bankLogo}
                           height={200}
                           width={200}
                         />
-                      </div>
-                    ))}
-                  </div>
-                </>
-              )}
+                      ) : (
+                        bank2.bankLogo1
+                      )}
+
+                      {/* <p>{bank.bankName}</p> */}
+                    </div>
+                  ))}
+                </div>
+                {showFinancialCompanies && (
+                  <>
+                    <span>Chọn công ty tài chính:</span>
+                    <div className={styles.grid}>
+                      {data1.map((bank3: any, index: any) => (
+                        <div
+                          key={index}
+                          className={`${styles.bankCard} ${
+                            selectedBank3 &&
+                            selectedBank3.bankCode === bank3.bankCode
+                              ? styles.selectedBox
+                              : ""
+                          }`}
+                          onClick={() => handleBankSelection3(bank3)}
+                        >
+                          <Image
+                            src={bank3.bankLogo}
+                            alt={bank3.bankName}
+                            className={styles.bankLogo}
+                            height={200}
+                            width={200}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
               <div
                 style={{
                   display: "flex",
@@ -718,11 +752,13 @@ query GetInstallmentInfo(
                 <input
                   className={styles.inputMoney}
                   value={displayValue}
+                  ref={ref3}
                   placeholder="Điền số tiền bạn muốn vay"
                   onKeyDown={handleKeyPress} // Lắng nghe sự kiện phím Enter
                   onChange={handleInputChange}
                 />
                 <button
+                  ref={ref4}
                   style={{
                     backgroundColor: "#333",
                     padding: 15,
@@ -832,7 +868,7 @@ query GetInstallmentInfo(
             </div>
           </Spin>
         )}
-        <Tour open={open} onClose={() => setOpen(false)} steps={steps} />
+        {/* <Tour open={open} onClose={() => setOpen(false)} steps={steps1} /> */}
       </div>
     </div>
   );
