@@ -288,11 +288,12 @@ query GetInstallmentInfo(
               method: "POST",
               body: JSON.stringify({
                 endpoint: selectedBank3?.endpoint,
-                price: selectedBank3?.price,
+                price: parseInt(value),
                 cost: 0,
               }),
             }
           );
+
           const responseData = await response.json();
           const bankData = responseData;
           setBanks3(bankData);
@@ -306,8 +307,7 @@ query GetInstallmentInfo(
     };
     fetchBank3();
   }, [triggerSearch, selectedBank3?.endpoint, selectedBank3?.price]);
-
-  console.log("check selectcard?????????????????????", selectedCard);
+  console.log("check bank3>?????????", banks3);
   const handleSearch = async () => {
     if (value) {
       setTriggerSearch(true);
@@ -391,6 +391,8 @@ query GetInstallmentInfo(
     }
   };
   const handleBankSelection3 = (bank3: any) => {
+    console.log("check select3 bank", bank3);
+
     setSelectedBank3(bank3);
   };
 
@@ -422,11 +424,13 @@ query GetInstallmentInfo(
       setSelectedBank3(null);
     }
   };
+  // console.log("check bank3--------------", banks3);
   // console.log("check bank1", banks);
   // console.log("check bank2" + banks2);
   // console.log("check bank3", banks3);
   // console.log("check select bank2", selectedBank2);
-  // console.log("check select bank3", selectedBank3);
+  console.log("check data1", data1);
+  console.log("check select bank3", selectedBank3);
   const steps: TourProps["steps"] =
     activeButton === 1
       ? [
